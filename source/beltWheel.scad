@@ -28,10 +28,16 @@ module beltSlot(height) {
 }
 
 
+module wheelMount(radius, height, support_length) {
+    // mount
+    cylinder(r=radius, h=height);
+    for(a=[00:60:359]) {
+        // support
+        rotate([0,0,a+30])translate([radius-1,2,1])rotate([90,0,0])linear_extrude(4)polygon([[0,0],[0,height/1.2],[support_length,0]]);
+    }
+}
 
-module beltWheel() {
-    wheel_radius = 75;
-    wheel_height = 12;
+module beltWheel(wheel_radius, wheel_height, mount_radius ) {
     
     module hexHole(r, h,edge=2)  {
         $fn=6;
@@ -44,36 +50,61 @@ module beltWheel() {
         union() {
             // wheel
             cylinder(r=wheel_radius+1, h=wheel_height);
-            // mount
-            cylinder(r=18, h=40);
-
-            for(a=[00:60:359]) {
-                // limit switch interruptors
-                rotate ([0,0,a])translate([wheel_radius-1,-3,wheel_height])cube(size=[1,6,6]);
-            }
-                
         }
         translate([0,0,wheel_height/2])rotate_extrude()translate([wheel_radius,0]){
             trapezoid(wheel_height-2,wheel_height-4,1);
             translate([1,-wheel_height/2])square([1,wheel_height]);
         }
+        dist = (wheel_radius-4)/1.5;
         for(a=[0:60:300]) {
            rotate ([0,0,a]) {
                // hex holes
-               translate ([47,0,0]) rotate([0,0,30])hexHole(r=24,h=12, $fn=6 );
+               translate ([dist,0,0]) rotate([0,0,30])hexHole(r=wheel_radius - 4 - dist,h=12, $fn=6 );
            }
         }
         // Belt slot
         rotate([0,0,30])translate([wheel_radius-6, 0, 0])beltSlot(wheel_height);
     }
     // print support
-        color([1,0,0,1])for (i=[-5:10:5]) {
-            rotate([0,0,30])translate([wheel_radius-6, i, 2-print_layer_height])cylinder(d=m3_nut_dia, h=print_layer_height);
+    color([1,0,0,1])for (i=[-5:10:5]) {
+        rotate([0,0,30])translate([wheel_radius-6, i, 2-print_layer_height])cylinder(d=m3_nut_dia, h=print_layer_height);
+    }
+}
+
+module beltWheelPipe(wheel_radius, wheel_height, mount_radius ) {
+    difference() {
+        union() {
+            beltWheel(wheel_radius, wheel_height, mount_radius);
+            wheelMount(radius=19, height=40, support_length=11);
+            // limit switch interruptors
+            rotate ([0,0,90])translate([wheel_radius-1,-3,wheel_height-1])cube(size=[1,6,7]);
         }
+        cylinder(d=Drive_pipe_OD, h=40);
+        for(a=[00:120:359]) {
+            // m3 hole
+            translate([0,0,25])rotate([0,90,a])cylinder(r=m3_dia, h=mount_radius);
+            // m3 nut hole
+            translate([0,0,25])rotate([0,90,a])cylinder(r=m3_nut_dia, h=Drive_pipe_OD/2+m3_nut_height, $fn=6);
+        }
+            
+    }
+}
+
+module beltWheelRod(wheel_radius, wheel_height, mount_radius ) {
+    difference() {
+        union() {
+            beltWheel(wheel_radius, wheel_height, mount_radius);
+            wheelMount(radius=19, height=40, support_length=11);
+            // limit switch interruptors
+            rotate ([0,0,-60])translate([wheel_radius-1,-3,wheel_height-1])cube(size=[1,6,7]);
+        }
+        cylinder(d=m8_dia, h=40);
+        cylinder(d=m8_nut_dia, h=m8_nut_height, $fn=6);
+        translate([0,0,40-m8_nut_height])cylinder(d=m8_nut_dia, h=m8_nut_height, $fn=6);
+    }
+            
 }
 
 $fs=0.3;
-$fa=3;
-beltWheel();
-//trapezoid(10,8,1);
-//thingy();
+$fa=2;
+beltWheelRod(75, 12, 19);
