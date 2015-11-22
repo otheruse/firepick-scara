@@ -1,5 +1,5 @@
 //---------------------------------------------------------------------------------------------------
-// RepRap "Morgan", main ver 1.10 - Multi extruder version
+// RepRap "Morgan", main ver 1.20 - Single extruder version
 // Copyright 2012, 2013. Author: Quentin Harley (qharley)
 // This original design is licensed under GPLv2.
 //
@@ -9,18 +9,10 @@ include <MCAD/teardrop.scad>
 include <MCAD/polyholes.scad>
 include <MCAD/nuts_and_bolts.scad>
 
-LMxUU = 8;				// Choose linear bearing: 8 or 12mm
-rodspacing = 175;		// Distance between rods:	175 standard, 190 wide
-PVC_pipe_OD = 32;		// Default 32mm
-PVC_pipe_ID = 27.5;	// measure pipe ID to adjust
-Drive_pipe_OD = 22.5;	// Drive pipe outter diameter: 22mm default
-THREADLESS = false;	// True for use of threadless ball screw in z-bracket
-SUPPORTED_ROD = true;	// Rods held by Z-mounts - False for platform mounted (lasercut)
-Leadnut_thread = false;// Apply the thread of the leadscrew nut to the Z coupler
+include <configuration.scad>
 
-ENVELOPE_CHECK = false;
-
-MakeMorgan(16);		// Select Part number to make	
+translate([0,0,20])MorganBeltWheel2();
+//translate([0,0,20])rotate([0,180,0])MorganBeltWheel();
 
 //MorganEndstopZ();
 //***********************************************************
@@ -1349,13 +1341,13 @@ module MorganBeltWheel()
 		polyhole(10,16);
 
 		
-		// Magnet hole 5mm
-		for (maghole = [0:7]){
-			rotate([0,0,maghole*360/8+22.5])
-			//rotate([0,0,155-40])
-				translate([71,0,7])
-					polyhole(30,5);
-		}				
+//		// Magnet hole 5mm
+//		for (maghole = [0:7]){
+//			rotate([0,0,maghole*360/8+22.5])
+//			//rotate([0,0,155-40])
+//				translate([71,0,7])
+//					polyhole(30,5);
+//		}				
 	}
 
 	Fastener_stack();
@@ -2262,3 +2254,4 @@ module MorganZCoupler ()
 
 
 }
+
