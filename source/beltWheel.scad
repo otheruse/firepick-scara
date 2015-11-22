@@ -107,4 +107,4 @@ module beltWheelRod(wheel_radius, wheel_height, mount_radius ) {
 
 $fs=0.3;
 $fa=2;
-beltWheelRod(75, 12, 19);
+beltWheelPipe(75, 12, 19);
