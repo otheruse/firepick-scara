@@ -22,7 +22,7 @@ module beltSlot(height) {
             translate([0, 0, height-2]) cylinder(d=m3_nut_dia, h=2);
             cylinder(d=5.5, h=height);
             cylinder(d=m3_nut_dia, h=2, $fn=6);
-            translate([4,0,2])thingy(width=2.8, height=height, length=8, r=8);
+            translate([4,0,2])thingy(width=2.5, height=height, length=8, r=8);
             }
     }
 }
@@ -71,7 +71,7 @@ module beltWheel(wheel_radius, wheel_height, mount_radius ) {
     }
 }
 
-module beltWheelPipe(wheel_radius, wheel_height, mount_radius ) {
+module beltWheelTube(wheel_radius, wheel_height, mount_radius ) {
     difference() {
         union() {
             beltWheel(wheel_radius, wheel_height, mount_radius);
@@ -110,4 +110,4 @@ module beltWheelRod(wheel_radius, wheel_height, mount_radius ) {
 
 $fs=0.3;
 $fa=2;
-beltWheelRod(75, 12, 19);
+beltWheelTube(75, 12, 19);
