@@ -11,7 +11,9 @@ include <MCAD/nuts_and_bolts.scad>
 
 include <configuration.scad>
 
-translate([0,0,20])MorganBeltWheel2();
+
+MakeMorgan(03);
+//translate([0,0,20])MorganBeltWheel();
 //translate([0,0,20])rotate([0,180,0])MorganBeltWheel();
 
 //MorganEndstopZ();
@@ -1341,13 +1343,13 @@ module MorganBeltWheel()
 		polyhole(10,16);
 
 		
-//		// Magnet hole 5mm
-//		for (maghole = [0:7]){
-//			rotate([0,0,maghole*360/8+22.5])
-//			//rotate([0,0,155-40])
-//				translate([71,0,7])
-//					polyhole(30,5);
-//		}				
+		// Magnet hole 5mm
+		for (maghole = [0:7]){
+			rotate([0,0,maghole*360/8+22.5])
+			//rotate([0,0,155-40])
+				translate([71,0,7])
+					polyhole(30,5);
+		}				
 	}
 
 	Fastener_stack();
