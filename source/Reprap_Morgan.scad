@@ -12,7 +12,7 @@ include <MCAD/nuts_and_bolts.scad>
 include <configuration.scad>
 
 
-MakeMorgan(03);
+MakeMorgan(1);
 //translate([0,0,20])MorganBeltWheel();
 //translate([0,0,20])rotate([0,180,0])MorganBeltWheel();
 
@@ -63,10 +63,10 @@ MakeMorgan(03);
 module MakeMorgan(partnumber)
 {
 	if (partnumber == 1 ){
-		MorganPVCsupport_ANG(PVC_pipe_ID,130,130,420, pipe = false, port=true);	// 458.47
+        MorganPVCsupport_ANG(PipeID = PVC_pipe_ID, target_x = 130, target_y = 130, target_z=420, pipe = false, port = true);
 	}
 	if (partnumber == 2 ){
-		MorganPVCsupport_ANG(PVC_pipe_ID,70,150,420, pipe = false);					// 451.44
+        MorganPVCsupport_ANG(PipeID = PVC_pipe_ID, target_x = 70, target_y = 150, target_z=420, pipe = false, port = false);
 	}
 	
   rotate([0,0,45]){ 					// parts rotated through 45deg to ease fitting to RepRap heatbed

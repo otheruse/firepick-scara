@@ -1,12 +1,6 @@
 
-include <MCAD/polyholes.scad>
+include <shapes.scad>
 include <configuration.scad>
-
-pi=3.1415926536;
-
-module trapezoid(top, base, h) {
-    polygon([[0,-base/2],[0,base/2],[h,top/2],[h,-top/2]]);
-}
 
 module beltSlot(height) {
     module thingy(width, height, length,r) {
@@ -19,11 +13,11 @@ module beltSlot(height) {
 
     for (i=[-5:10:5]) {
         translate([0, i, 0]) {
-            translate([0, 0, height-2]) cylinder(d=m3_nut_dia, h=2);
+            translate([0, 0, height-m3_nut_height]) cylinder(d=m3_nut_dia, h=m3_nut_height);
             cylinder(d=5.5, h=height);
-            cylinder(d=m3_nut_dia, h=2, $fn=6);
-            translate([4,0,2])thingy(width=2.5, height=height, length=8, r=8);
-            }
+            cylinder(d=m3_nut_dia, h=m3_nut_height, $fn=6);
+            translate([4,0,2.5])thingy(width=2.5, height=height, length=8, r=8);
+        }
     }
 }
 
@@ -52,7 +46,7 @@ module beltWheel(wheel_radius, wheel_height, mount_radius ) {
             cylinder(r=wheel_radius+flange, h=wheel_height);
         }
         translate([0,0,wheel_height/2])rotate_extrude()translate([wheel_radius,0]){
-            trapezoid(wheel_height-3,wheel_height-3-2*flange,flange);
+            trapezoid(top=wheel_height-3,base=wheel_height-3-2*flange,h=flange);
             translate([1,-wheel_height/2])square([1,wheel_height]);
         }
         dist = (wheel_radius-4)/1.5;
@@ -67,7 +61,7 @@ module beltWheel(wheel_radius, wheel_height, mount_radius ) {
     }
     // print support
     color([1,0,0,1])for (i=[-5:10:5]) {
-        rotate([0,0,30])translate([wheel_radius-6, i, 2-print_layer_height])cylinder(d=m3_nut_dia, h=print_layer_height);
+        rotate([0,0,30])translate([wheel_radius-6, i, 2.5-print_layer_height])cylinder(d=m3_nut_dia, h=print_layer_height);
     }
 }
 
@@ -77,7 +71,7 @@ module beltWheelTube(wheel_radius, wheel_height, mount_radius ) {
             beltWheel(wheel_radius, wheel_height, mount_radius);
             wheelMount(radius=19, height=40, support_length=11);
             // limit switch interruptors
-            rotate ([0,0,90])translate([wheel_radius-16,-3,wheel_height-1])cube(size=[1,6,7]);
+            linear_extrude(wheel_height+8)rotate(90)arc(r=wheel_radius-16+.5, w=1, angle=5, $fa=1);
         }
         cylinder(d=Drive_pipe_OD, h=40);
         for(a=[00:120:359]) {
@@ -96,7 +90,7 @@ module beltWheelRod(wheel_radius, wheel_height, mount_radius ) {
             beltWheel(wheel_radius, wheel_height, mount_radius);
             wheelMount(radius=19, height=40, support_length=11);
             // limit switch interruptors
-            rotate ([0,0,-30])translate([wheel_radius-16,-3,wheel_height-1])cube(size=[1,6,7]);
+            linear_extrude(wheel_height+8)rotate(-30)arc(r=wheel_radius-16+.5, w=1, angle=5, $fa=1);
         }
         cylinder(d=m8_dia, h=40);
         cylinder(d=m8_nut_dia, h=m8_nut_height, $fn=6);
@@ -111,3 +105,4 @@ module beltWheelRod(wheel_radius, wheel_height, mount_radius ) {
 $fs=0.3;
 $fa=2;
 beltWheelTube(75, 12, 19);
+
