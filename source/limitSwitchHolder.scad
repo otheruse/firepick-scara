@@ -56,6 +56,6 @@ module limitSwitchHolder(height=8) {
     }
 }
 
-$fs=0.3;
-$fa=3;
-limitSwitchHolder();
+//$fs=0.3;
+//$fa=3;
+//limitSwitchHolder();

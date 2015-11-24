@@ -87,7 +87,7 @@ module MotorMount(Height = 50, Mheight = 48){
 
 }
 
-$fa=3;
-$fs=0.3;
-MotorMount(Height=50);
+//$fa=3;
+//$fs=0.3;
+//MotorMount(Height=50);
 //MotorMount(Height=70);

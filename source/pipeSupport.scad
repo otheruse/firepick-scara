@@ -80,7 +80,10 @@ module pipeSupport(PipeID = 26, PipeOD = 32, target_x = 0, target_y = 0, target_
 
 }
 
-$fs=0.3;
-$fa=3;
-pipeSupport(PipeID = PVC_pipe_ID-1, PipeOD = PVC_pipe_OD, target_x = 130, target_y = 130, target_z=420, pipe = false, port = true);
-//pipeSupport(PVC_pipe_ID-1, PipeOD = PVC_pipe_OD, target_x = 70, target_y = 150, target_z=420, pipe = false, port = false);
+module pipeSupportLong() {
+    pipeSupport(PipeID = PVC_pipe_ID-1, PipeOD = PVC_pipe_OD, target_x = 130, target_y = 130, target_z=420, pipe = false, port = true);
+}
+
+module pipeSupportShort() {
+    pipeSupport(PVC_pipe_ID-1, PipeOD = PVC_pipe_OD, target_x = 70, target_y = 150, target_z=420, pipe = false, port = false);
+}
