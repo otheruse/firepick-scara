@@ -5,7 +5,7 @@ OPENSCAD_SETTINGS=$$fa=2;$$fs=0.2;
 
 EXTRAS=configuration.scad shapes.scad
 
-FILES=driveWheelRod.stl driveWheelTube.stl motorMountShort.stl motorMountLong.stl limitSwitchMount.stl pipeSupportLong.stl pipeSupportShort.stl BearingAdaptor.stl ZMountBottom.stl ZMountTop.stl BedArmLeft.stl BedArmRight.stl BedStabilizerBracket.stl
+FILES=driveWheelRod.stl driveWheelTube.stl motorMountShort.stl motorMountLong.stl limitSwitchMount.stl pipeSupportLong.stl pipeSupportShort.stl BearingAdaptor.stl ZMountBottom.stl ZMountTop.stl BedArmLeft.stl BedArmRight.stl BedStabilizerBracket.stl BearingScrew.stl BearingScrewMount.stl
 
 PARTS=$(join $(addsuffix $(TARGET)/, $(dir $(FILES))), $(notdir $(FILES))) 
 
@@ -24,7 +24,7 @@ $(TARGET)/motorMountShort.stl: motorMount.scad $(EXTRAS)
 	$(OPENSCAD) -o $@ -D'$(OPENSCAD_SETTINGS);MotorMount(Height=50);' $<
 
 $(TARGET)/motorMountLong.stl: motorMount.scad $(EXTRAS)
-	$(OPENSCAD) -o $@ -D'$(OPENSCAD_SETTINGS);MotorMount(Height=70);' $<
+	$(OPENSCAD) -o $@ -D'$(OPENSCAD_SETTINGS);mirror()MotorMount(Height=70);' $<
 
 $(TARGET)/limitSwitchMount.stl: limitSwitchHolder.scad $(EXTRAS)
 	$(OPENSCAD) -o $@ -D'$(OPENSCAD_SETTINGS);limitSwitchHolder();' $<
@@ -52,6 +52,12 @@ $(TARGET)/BedArmRight.stl: BedArm.scad $(EXTRAS)
 
 $(TARGET)/BedStabilizerBracket.stl: BedStabilizerBracket.scad $(EXTRAS)
 	$(OPENSCAD) -o $@ -D'$(OPENSCAD_SETTINGS);Bed_stabil_bracket(16);' $<
+
+$(TARGET)/BearingScrew.stl: BearingScrew.scad $(EXTRAS)
+	$(OPENSCAD) -o $@ -D'$(OPENSCAD_SETTINGS);BearingScrew();' $<
+
+$(TARGET)/BearingScrewMount.stl: BearingScrew.scad $(EXTRAS)
+	$(OPENSCAD) -o $@ -D'$(OPENSCAD_SETTINGS);BearingScrewMount();' $<
 
 #assembly: $(TARGET) $(TARGET)/assembly.stl
 

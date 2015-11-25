@@ -31,6 +31,14 @@ module arc(w=1, r, angle) {
     }
 }
 
+module wedge(r, angle) {
+    difference() {
+        circle(r=r);
+        rotate(angle/2)translate([-r,0])square([r*2,r*2]);
+        rotate(180-angle/2)translate([-r,0])square([r*2,r*2]);
+    }
+}
+
 // 3D basic shapes
 
 module roundedCube(size = [10,10,10],radius=1) {

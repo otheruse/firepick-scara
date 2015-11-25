@@ -34,17 +34,18 @@ module MotorMount(Height = 50, Mheight = 48){
 				intersection(){
                     support_width = 3;
 					union(){
-						translate([10,-32,25])
-							rotate([0,0,-45])
-								cube([13,support_width,50],center=true);
+                        // Not printable
+//						translate([10,-32,25])
+//							rotate([0,0,-45])
+//								cube([13,support_width,50],center=true);
+//						translate([10,32,25])
+//							rotate([0,0,45])
+//								cube([13,support_width,50],center=true);
 						mirror()
 				  			translate([10,-32,25])
 								rotate([0,0,-45])
 									cube([13,support_width,50],center=true);
 		
-						translate([10,32,25])
-							rotate([0,0,45])
-								cube([13,support_width,50],center=true);
 						mirror()
 				  			translate([10,32,25])
 								rotate([0,0,45])
@@ -55,16 +56,14 @@ module MotorMount(Height = 50, Mheight = 48){
 				}
 
 			}
-			translate([0,0,0])
-				Motor(Height, 44);
-			translate([65,0,25])
-				cube([100,100,100],center=true);
-			translate([-65,0,25])
-				cube([100,100,100],center=true);
-			translate([0,22,Height - 5])
-				cylinder(h=10,d=m3_dia);
-			translate([0,-22,Height - 5])
-				cylinder(h=10,d=m3_dia);
+			translate([0,0,0])Motor(Height, 44);
+            // slice bottom off
+			translate([65,0,25])cube([100,100,100],center=true);
+            // slice top off
+			translate([-78,0,25])cube([100,100,100],center=true);
+            for (a=[0:90:180]) {
+                rotate([0,0,a])translate([0,22,Height - 5])cylinder(h=10,d=m3_dia);
+            }
 			translate([0,-38, 0])
 				cylinder(h=10,d=m3_dia);
 			intersection(){
@@ -77,10 +76,12 @@ module MotorMount(Height = 50, Mheight = 48){
 					}
 			}
 			translate([0,0,Height - 5])
-				cylinder(h=10,d=22);
+				cylinder(h=10,d=23);
 			
-			translate([0,0,Height/2])
-				cube([37,37,Height],center=true);
+            // Take edges off large opening
+			translate([15,0,Height/2])cube([10,37,Height],center=true);
+           // Take edged off small opening
+			translate([-30,0,Height/2])cube([10,10,Height],center=true);
 
 		}
 	} 
@@ -89,5 +90,5 @@ module MotorMount(Height = 50, Mheight = 48){
 
 //$fa=3;
 //$fs=0.3;
-//MotorMount(Height=50);
-//MotorMount(Height=70);
+MotorMount(Height=50);
+//mirror()MotorMount(Height=70);
