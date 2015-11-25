@@ -10,7 +10,7 @@ module BearingScrew(axis_dia = 8, bearing_od=13, bearing_id=4, bearing_h=5, lead
     clamp_width = 20;
     clamp_length = 26;
     clamp_split = 1.5;
-    tension_distance = 1;
+    tension_distance = 0.3;
     
     thread_angle = atan(lead/(8*pi));
     
@@ -30,10 +30,11 @@ module BearingScrew(axis_dia = 8, bearing_od=13, bearing_id=4, bearing_h=5, lead
                 rotate([0,thread_angle,a]) {
                     // bearing holes
                     translate([0,(axis_dia + bearing_od)/2 - tension_distance, -bearing_h+1 ])cylinder(d=bearing_od + 2, h=bearing_h);
+                    %translate([0,(axis_dia + bearing_od)/2 - tension_distance, -bearing_h+1 ])cylinder(d=bearing_od, h=bearing_h);
                     // bearing screw holes
                     translate([0,(axis_dia + bearing_od)/2 - tension_distance, -m4_dia ])cylinder(d=m4_dia, h=height*2);
                     // bearing nut holes
-                    translate([0,(axis_dia + bearing_od)/2 - tension_distance, 6 ])rotate([0,0,-thread_angle])cylinder(d=m4_nut_dia, h=height, $fn=6);        
+                    translate([0,(axis_dia + bearing_od)/2 - tension_distance, height-4 ])rotate([0,0,-thread_angle])cylinder(d=m4_nut_dia, h=height, $fn=6);        
                 }
                 // Mount holes
                 rotate([0,0,a-60])translate([0,mount_dia/2-4, -1])cylinder(d=m4_dia, h=height+2);
@@ -51,12 +52,12 @@ module BearingScrew(axis_dia = 8, bearing_od=13, bearing_id=4, bearing_h=5, lead
 
         }
         // print support
-//       for (a=[60:120:360]) {
-//            color([1,0,0,1])rotate([0,thread_angle,a]) {
-//                 // bearing nut holes
-//                translate([0,(axis_dia + bearing_od)/2 - tension_distance, 6 ])rotate([0,0,-thread_angle])cylinder(d=m4_nut_dia, h=print_layer_height);        
-//            }
-//         }
+       for (a=[60:120:360]) {
+            color([1,0,0,1])rotate([0,thread_angle,a]) {
+                 // bearing nut holes
+                translate([0,(axis_dia + bearing_od)/2 - tension_distance, height-4-print_layer_height ])rotate([0,0,-thread_angle])cylinder(d=m4_dia+1, h=print_layer_height);        
+            }
+         }
      }
 }
 
@@ -110,4 +111,6 @@ module BearingScrewAssembly() {
 
 //$fs=1;
 //$fa=6;
-BearingScrew();
+//BearingScrew();
+//color([0,1,1,1])cylinder(d=8, h=40);
+//BearingScrew(axis_dia = 8, bearing_od=13, bearing_id=4, bearing_h=5, lead = 4);
