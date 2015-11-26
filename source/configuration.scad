@@ -9,17 +9,24 @@ Leadnut_thread = false;// Apply the thread of the leadscrew nut to the Z coupler
 
 ENVELOPE_CHECK = false;
 
-m3_dia = 3.2;
-m3_nut_dia = 6.8;
-m3_nut_slot = 5.8;
-m3_nut_height = 3;
+function nutDia(nominalDiameter) = nominalDiameter *2 + 0.8;
+function boltDia(nominalDiameter) = nominalDiameter + 0.2;
+function nutHeight(nominalDiameter) = nominalDiameter*0.8 + 0.6;
+function nutSlot(nominalDiameter) = nominalDiameter*1.7333 + 0.4;
 
-m4_dia = 4.2;
-m4_nut_dia = 8.8;
-m4_nut_height = 3.8;
+pi = 3.1415926536;
 
-m8_dia = 8.2;
-m8_nut_dia = 16.5;
-m8_nut_height = 6.8;
+m3_dia = boltDia(3);
+m3_nut_dia = nutDia(3);
+m3_nut_slot = nutSlot(3);
+m3_nut_height = nutHeight(3);
+
+m4_dia = boltDia(4);
+m4_nut_dia = nutDia(4);
+m4_nut_height = nutHeight(4);
+
+m8_dia = boltDia(8);
+m8_nut_dia = nutDia(8);
+m8_nut_height = nutHeight(8);
 
 print_layer_height = 0.25;
