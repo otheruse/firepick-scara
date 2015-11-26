@@ -51,7 +51,7 @@ $(TARGET)/ZMountBracket.stl: BedStabilizerBracket.scad $(EXTRAS)
 	$(OPENSCAD) -o $@ -D'$(OPENSCAD_SETTINGS);ZMountBracket();' $<
 
 $(TARGET)/BearingScrew.stl: BearingScrew.scad $(EXTRAS)
-	$(OPENSCAD) -o $@ -D'$(OPENSCAD_SETTINGS);BearingScrew();' $<
+	$(OPENSCAD) -o $@ -D'$(OPENSCAD_SETTINGS);BearingScrew(lead = 3.2);' $<
 
 $(TARGET)/BearingScrewMount.stl: BearingScrew.scad $(EXTRAS)
 	$(OPENSCAD) -o $@ -D'$(OPENSCAD_SETTINGS);BearingScrewMount();' $<

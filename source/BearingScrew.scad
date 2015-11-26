@@ -1,4 +1,5 @@
 include <configuration.scad>
+include <shapes.scad>
 
 
 module BearingScrew(axis_dia = 8, bearing_od=13, bearing_id=4, bearing_h=5, lead = 3, tension_distance = 0.3) {
@@ -57,10 +58,9 @@ module BearingScrew(axis_dia = 8, bearing_od=13, bearing_id=4, bearing_h=5, lead
      }
 }
 
-module BearingScrewMount(axis_dia = 8, bearing_od=13, thickness=3) {
+module BearingScrewMount(axis_dia = 8, bearing_od=13, thickness=3,  base_width = 25) {
     mount_dia = axis_dia + bearing_od*2+4;
 
-    base_width = 25;
     
     translate([0,0,thickness])rotate([90,0,0])difference() {
         union() {
@@ -80,40 +80,48 @@ module BearingScrewMount(axis_dia = 8, bearing_od=13, thickness=3) {
             }
         }
         // base
-        translate([-(base_width/2+thickness),0,thickness])roundedCube([mount_dia-2*thickness, base_width/2+1, base_width], radius=2);
+        translate([-(mount_dia/2-thickness),0,thickness])roundedCube([mount_dia-2*thickness, base_width, base_width], radius=2);
         // base
-        translate([-(base_width/2+thickness),0,-base_width])roundedCube([mount_dia-2*thickness, base_width/2+1, base_width], radius=2);
+        translate([-(mount_dia/2-thickness),0,-base_width])roundedCube([mount_dia-2*thickness, base_width, base_width], radius=2);
         // axis hole
         translate([0, (mount_dia)/2+thickness+1,-2])cylinder(d=axis_dia+1, h=thickness+4);
         translate([0, (mount_dia)/2+thickness+1,0])for (a=[0:120:359]) {
             // Mount holes
-            rotate([0,0,a+30])translate([0,mount_dia/2-4, -1])cylinder(d=boltDia(bearing_id), h=thickness+2);
+            rotate([0,0,a+30])translate([0,mount_dia/2-4, -1])cylinder(d=m4_dia, h=thickness+2);
         }
         // Mount holes
         for (i=[1,-1]) {
             for (j=[1,-1]) {
-                translate([i*10,1,j*8+thickness/2])rotate([90,0,0])cylinder(d=boltDia(bearing_id), h=thickness+2);
+                translate([i*(mount_dia-thickness)/4,1,j*(base_width+thickness)/4+thickness/2])rotate([90,0,0])cylinder(d=m4_dia, h=thickness+2);
             }
         }
     }
 }
 
 module BearingScrewAssembly() {
-    mount_dia = 38;
-    translate([0,0,3])rotate([90,0,0])BearingScrewMount();
-    translate([0,-mount_dia/2-7,3])rotate([0,0,90])BearingScrew();
-    translate([0,-mount_dia/2-7,0])rotate([0,180,90])BearingScrew();
+    axis_dia = 8;
+    bearing_od = 13;
+    bearing_id = 4;
+    bearing_h = 5;
+    mount_dia = axis_dia + bearing_od*2+4;
+    mount_thickness = 3;
+    translate([0,0,3])rotate([90,0,0])BearingScrewMount(axis_dia, bearing_od, mount_thickness, 25);
+    translate([0,-((mount_dia)/2+2*mount_thickness+1),3])rotate([0,0,90])BearingScrew(axis_dia = axis_dia, bearing_od=bearing_od, bearing_id=bearing_id, bearing_h=bearing_h, lead = 3.2);
+    translate([0,-((mount_dia)/2+2*mount_thickness+1),0])rotate([0,180,90])BearingScrew(axis_dia = axis_dia, bearing_od=bearing_od, bearing_id=bearing_id, bearing_h=bearing_h, lead = 3.2);
 }
 
-$fs=0.3;
-$fa=3;
-%color([0,1,1,0.5])cylinder(d=8, h=40);
+//BearingScrewMount(12, 22, 8, 35);
+//$fs=0.3;
+//$fa=3;
 
-// 623zz
-BearingScrew(axis_dia = 8, bearing_od=10, bearing_id=3, bearing_h=4, lead = 3.2);
-
-// 624zz
-translate([40,0,0])BearingScrew(axis_dia = 8, bearing_od=13, bearing_id=4, bearing_h=5, lead = 3.2);
-
-// 608ZZ
-translate([100,0,0])BearingScrew(axis_dia = 12, bearing_od=22, bearing_id=8, bearing_h=7, lead = 3.2);
+//BearingScrewAssembly();
+//%color([0,1,1,0.5])cylinder(d=8, h=40);
+//
+//// 623zz
+//BearingScrew(axis_dia = 8, bearing_od=10, bearing_id=3, bearing_h=4, lead = 3.2);
+//
+//// 624zz
+//translate([40,0,0])BearingScrew(axis_dia = 8, bearing_od=13, bearing_id=4, bearing_h=5, lead = 3.2);
+//
+//// 608ZZ
+//translate([100,0,0])BearingScrew(axis_dia = 12, bearing_od=22, bearing_id=8, bearing_h=7, lead = 3.2);
