@@ -104,7 +104,7 @@ module BearingScrewAssembly() {
     bearing_id = 4;
     bearing_h = 5;
     mount_dia = axis_dia + bearing_od*2+4;
-    mount_thickness = 3;
+    mount_thickness = 4;
     translate([0,0,3])rotate([90,0,0])BearingScrewMount(axis_dia, bearing_od, mount_thickness, 25);
     translate([0,-((mount_dia)/2+2*mount_thickness+1),3])rotate([0,0,90])BearingScrew(axis_dia = axis_dia, bearing_od=bearing_od, bearing_id=bearing_id, bearing_h=bearing_h, lead = 3.2);
     translate([0,-((mount_dia)/2+2*mount_thickness+1),0])rotate([0,180,90])BearingScrew(axis_dia = axis_dia, bearing_od=bearing_od, bearing_id=bearing_id, bearing_h=bearing_h, lead = 3.2);
@@ -113,7 +113,7 @@ module BearingScrewAssembly() {
 //BearingScrewMount(12, 22, 8, 35);
 //$fs=0.3;
 //$fa=3;
-
+//
 //BearingScrewAssembly();
 //%color([0,1,1,0.5])cylinder(d=8, h=40);
 //

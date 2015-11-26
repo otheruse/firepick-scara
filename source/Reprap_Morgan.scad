@@ -11,6 +11,14 @@ include <MCAD/nuts_and_bolts.scad>
 
 include <configuration.scad>
 
+LMxUU = rod_diameter;				// Choose linear bearing: 8 or 12mm
+
+SUPPORTED_ROD = true;	// Rods held by Z-mounts - False for platform mounted (lasercut)
+Leadnut_thread = false;// Apply the thread of the leadscrew nut to the Z coupler
+
+ENVELOPE_CHECK = false;
+THREADLESS = true;	// True for use of threadless ball screw in z-bracket
+
 
 MakeMorgan(1);
 //translate([0,0,20])MorganBeltWheel();

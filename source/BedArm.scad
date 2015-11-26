@@ -115,11 +115,11 @@ module BearingMount(bearing_od = 15, bearing_h=24, hex = true) {
     translate([0,bearing_od/2,mount_height-15])mirror([0,1,0])screwMount();
 }
 
-module BedArm() {
-    rotate([0,0,-90])BearingMount();
+module BedArm(bearing_diameter = 15, bearing_length = 24) {
+    rotate([0,0,-90])BearingMount(bearing_od = bearing_diameter, bearing_h = bearing_length);
     BedArmNoMount(20);
 }
 
 //$fs=0.5;
 //$fa=3;
-//BedArm();
+//BedArm(bearing_diameter = 15, bearing_length = 24);

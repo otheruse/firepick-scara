@@ -134,5 +134,6 @@ module ZMountTop(rodspacing = 175, rodsize = 8, thickness = 3)
 }
 
 //ZMountBottom(thickness = 3);
+//translate([0,60,0])ZMountBottom(rodspacing = 175,thickness = 3);
 //PillarMount(3);
 //ZmountTop();

@@ -15,10 +15,10 @@ TARGETS=$(PARTS)
 parts : $(TARGET) $(TARGETS)
 
 $(TARGET)/driveWheelRod.stl: driveWheel.scad $(EXTRAS)
-	$(OPENSCAD) -o $@ -D'$(OPENSCAD_SETTINGS);beltWheelRod(75, 12, 19);' $<
+	$(OPENSCAD) -o $@ -D'$(OPENSCAD_SETTINGS);beltWheelRod(wheel_radius = 75);' $<
 
 $(TARGET)/driveWheelTube.stl: driveWheel.scad $(EXTRAS)
-	$(OPENSCAD) -o $@ -D'$(OPENSCAD_SETTINGS);beltWheelTube(75, 12, 19);' $<
+	$(OPENSCAD) -o $@ -D'$(OPENSCAD_SETTINGS);beltWheelTube(wheel_radius = 75);' $<
 
 $(TARGET)/motorMountShort.stl: motorMount.scad $(EXTRAS)
 	$(OPENSCAD) -o $@ -D'$(OPENSCAD_SETTINGS);MotorMount(Height=50);' $<
@@ -27,7 +27,7 @@ $(TARGET)/motorMountLong.stl: motorMount.scad $(EXTRAS)
 	$(OPENSCAD) -o $@ -D'$(OPENSCAD_SETTINGS);mirror()MotorMount(Height=70);' $<
 
 $(TARGET)/limitSwitchMount.stl: limitSwitchHolder.scad $(EXTRAS)
-	$(OPENSCAD) -o $@ -D'$(OPENSCAD_SETTINGS);limitSwitchHolder();' $<
+	$(OPENSCAD) -o $@ -D'$(OPENSCAD_SETTINGS);limitSwitchHolder(rod_dia = rod_diameter);' $<
 
 $(TARGET)/pipeSupportLong.stl: pipeSupport.scad $(EXTRAS)
 	$(OPENSCAD) -o $@ -D'$(OPENSCAD_SETTINGS);pipeSupportLong();' $<
@@ -39,16 +39,16 @@ $(TARGET)/BearingAdaptor.stl: BearingAdaptor.scad $(EXTRAS)
 	$(OPENSCAD) -o $@ -D'$(OPENSCAD_SETTINGS);BearingAdaptor();' $<
 
 $(TARGET)/ZMountBottom.stl: ZMount.scad $(EXTRAS)
-	$(OPENSCAD) -o $@ -D'$(OPENSCAD_SETTINGS);ZMountBottom();' $<
+	$(OPENSCAD) -o $@ -D'$(OPENSCAD_SETTINGS);ZMountBottom(rodspacing=rodspacing, rodsize = rod_diameter+0.2);' $<
 
 $(TARGET)/ZMountTop.stl: ZMount.scad $(EXTRAS)
-	$(OPENSCAD) -o $@ -D'$(OPENSCAD_SETTINGS);ZMountTop();' $<
+	$(OPENSCAD) -o $@ -D'$(OPENSCAD_SETTINGS);ZMountTop(rodspacing=rodspacing, rodsize = rod_diameter+0.2);' $<
 
 $(TARGET)/BedArm.stl: BedArm.scad $(EXTRAS)
-	$(OPENSCAD) -o $@ -D'$(OPENSCAD_SETTINGS);BedArm();' $<
+	$(OPENSCAD) -o $@ -D'$(OPENSCAD_SETTINGS);BedArm(bearing_diameter = bearing_diameter, bearing_length = bearing_length);' $<
 
 $(TARGET)/ZMountBracket.stl: BedStabilizerBracket.scad $(EXTRAS)
-	$(OPENSCAD) -o $@ -D'$(OPENSCAD_SETTINGS);ZMountBracket();' $<
+	$(OPENSCAD) -o $@ -D'$(OPENSCAD_SETTINGS);ZMountBracket(bearing_diameter = bearing_diameter, bearing_length = bearing_length);' $<
 
 $(TARGET)/BearingScrew.stl: BearingScrew.scad $(EXTRAS)
 	$(OPENSCAD) -o $@ -D'$(OPENSCAD_SETTINGS);BearingScrew(lead = 3.2);' $<

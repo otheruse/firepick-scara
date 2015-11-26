@@ -3,13 +3,13 @@ include <MCAD/teardrop.scad>
 include <BedArm.scad>
 include <BearingScrew.scad>
 
-module BracketBase(bsize = 16){
+module BracketBase(bearing_diameter = 15, bearing_length = 24){
 	difference(){
 		union(){
 			translate([(rodspacing)/2,0,0])
-				rotate([0,0,90])BracketBearingMount(bsize);
+				rotate([0,0,90])BracketBearingMount(bearing_diameter = bearing_diameter, bearing_length = bearing_length);
 			translate([(rodspacing)/-2,0,0])
-				rotate([0,0,-90])mirror()BracketBearingMount(bsize);
+				rotate([0,0,-90])mirror()BracketBearingMount(bearing_diameter = bearing_diameter, bearing_length = bearing_length);
 			difference(){
 			  union(){
 				translate([0,-14.5,25]){
@@ -27,13 +27,7 @@ module BracketBase(bsize = 16){
 				}
 			  }
 		
-			  translate([rodspacing/2,0,0])
-					cylinder(r=bsize*0.8, h=50);
-			  translate([rodspacing/-2,0,0])
-					cylinder(r=bsize*0.8, h=50);	
 			}		
-
-	
 			cylinder(r=22,h=50);
 		}
 
@@ -52,36 +46,35 @@ module BracketBase(bsize = 16){
 		// Magnet hole
 //		#translate([rodspacing/-2+LMxUU/1.5, LMxUU*-1.756, 0])
 //			cylinder(d=5, h=3);
-	
 	}
 }
 
-module BracketBearingMount(bsize=16) {
-    bearing_od = 15;
-    bearing_h=24;
+module BracketBearingMount(bearing_diameter = 15, bearing_length = 24) {
+//    bearing_diameter = 15;
+//    bearing_length=24;
     bearing_count=3;
-    mount_height = (bearing_h+2)*3+2;
+    mount_height = (bearing_length+2)*3+2;
     wall_thickness = 3;
 
     difference() {
         // bearing tube base
         hull() {
-            translate([-6, 0, 0])cylinder(d=bearing_od + 2*wall_thickness, h = mount_height);
-            cylinder(d=bearing_od + 2*wall_thickness, h = mount_height);
+            translate([-24+bearing_diameter, 0, 0])cylinder(d=bearing_diameter + 2*wall_thickness, h = mount_height);
+            cylinder(d=bearing_diameter + 2*wall_thickness, h = mount_height);
         }
-        cylinder(d=bearing_od, h = mount_height);
+        cylinder(d=bearing_diameter, h = mount_height);
        // slice half off
-        translate([0,-bearing_od/2 - wall_thickness,-1])cube([bearing_od+2*wall_thickness, bearing_od+2*wall_thickness, mount_height+2]);
+        translate([0,-bearing_diameter/2 - wall_thickness,-1])cube([bearing_diameter+2*wall_thickness, bearing_diameter+2*wall_thickness, mount_height+2]);
     }
     // bearing tube
-    BearingTube(bearing_od = bearing_od, bearing_h=bearing_h, bearing_count=bearing_count, wall_thickness = wall_thickness);
+    BearingTube(bearing_od = bearing_diameter, bearing_h=bearing_length, bearing_count=bearing_count, wall_thickness = wall_thickness);
     //Limit switch interruptor
-    translate([-bearing_od/2-8,0,mount_height-1])cube([8,1,8]);
+    translate([-bearing_diameter/2-6,0,mount_height-1])cube([6,1,8]);
     // screw mounts
-    translate([0,-bearing_od/2,15])screwMount(thickness = 13, hex=false);
-    translate([0,-bearing_od/2,mount_height-15])screwMount(thickness = 13, hex=false);
-    translate([0,bearing_od/2,15])mirror([0,1,0])screwMount(thickness = 13, hex=false);
-    translate([0,bearing_od/2,mount_height-15])mirror([0,1,0])screwMount(thickness = 13, hex=false);
+    translate([0,-bearing_diameter/2,15])screwMount(thickness = 13, hex=false);
+    translate([0,-bearing_diameter/2,mount_height-15])screwMount(thickness = 13, hex=false);
+    translate([0,bearing_diameter/2,15])mirror([0,1,0])screwMount(thickness = 13, hex=false);
+    translate([0,bearing_diameter/2,mount_height-15])mirror([0,1,0])screwMount(thickness = 13, hex=false);
 }
 
 
@@ -99,11 +92,11 @@ module ZMountBracketIntegrated() {
     }
 }
 
-module ZMountBracket() {
+module ZMountBracket(bearing_diameter = 15, bearing_length = 24) {
 //    screw_
     difference() {
         union() {
-            BracketBase(16);
+            BracketBase(bearing_diameter = bearing_diameter, bearing_length = bearing_length);
             // bearingscrew mount
             hull() {
                 translate([0,-40,0])cylinder(d=38, h=6);
@@ -123,13 +116,16 @@ module ZMountBracket() {
             rotate([0,0,a])translate([0,15, -1])cylinder(d=m4_dia, h=20);
         }
         // bearing mount screws
-        translate([(rodspacing)/2-(9+m3_nut_dia/2),-12,15])rotate([90,0,0])cylinder(d=m3_nut_dia, h=20);
-        translate([-(rodspacing)/2+(9+m3_nut_dia/2),-12,15])rotate([90,0,0])cylinder(d=m3_nut_dia, h=20);
+        translate([(rodspacing)/2-(bearing_diameter/2+1.5+m3_nut_dia/2),-12,15])rotate([90,0,0])cylinder(d=m3_nut_dia, h=20);
+        translate([-(rodspacing)/2+(bearing_diameter/2+1.5+m3_nut_dia/2),-12,15])rotate([90,0,0])cylinder(d=m3_nut_dia, h=20);
     }
 }
 
 
-ZMountBracket();
+//ZMountBracket(bearing_diameter = 21, bearing_length = 30);
+
+//color([1,0,0,1])translate([0,-50,0])
+//ZMountBracket(bearing_diameter = 15, bearing_length = 24);
 //%translate([0,-40,6])rotate([0,0,60])BearingScrew();
 
 //%color([1,0,1,0.5])cylinder(d=Drive_pipe_OD, h=200, center=true);
