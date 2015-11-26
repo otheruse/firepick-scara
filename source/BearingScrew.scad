@@ -51,9 +51,8 @@ module BearingScrew(axis_dia = 8, bearing_od=13, bearing_id=4, bearing_h=5, lead
         // print support
        for (a=[60:120:360]) {
             color([1,0,0,1])rotate([0,thread_angle,a]) {
-                 // bearing nut holes
-                translate([0,(axis_dia + bearing_od)/2 - tension_distance, height-4-print_layer_height ])rotate([0,0,-thread_angle])cylinder(d=boltDia(bearing_id)+1, h=print_layer_height);        
-            }
+                translate([0,(axis_dia + bearing_od)/2 - tension_distance, height-nutHeight(bearing_id)-1 -print_layer_height ])rotate([0,0,-thread_angle])cylinder(d=boltDia(bearing_id)+1, h=print_layer_height);        
+                }
          }
      }
 }
@@ -80,9 +79,9 @@ module BearingScrewMount(axis_dia = 8, bearing_od=13, thickness=3,  base_width =
             }
         }
         // base
-        translate([-(mount_dia/2-thickness),0,thickness])roundedCube([mount_dia-2*thickness, base_width, base_width], radius=2);
+        translate([-(mount_dia/2-thickness),0,thickness])roundedCube([mount_dia-2*thickness, (mount_dia - axis_dia -4)/2+thickness+1, base_width], radius=2);
         // base
-        translate([-(mount_dia/2-thickness),0,-base_width])roundedCube([mount_dia-2*thickness, base_width, base_width], radius=2);
+        translate([-(mount_dia/2-thickness),0,-base_width])roundedCube([mount_dia-2*thickness, (mount_dia - axis_dia -4)/2+thickness+1, base_width], radius=2);
         // axis hole
         translate([0, (mount_dia)/2+thickness+1,-2])cylinder(d=axis_dia+1, h=thickness+4);
         translate([0, (mount_dia)/2+thickness+1,0])for (a=[0:120:359]) {
@@ -110,7 +109,8 @@ module BearingScrewAssembly() {
     translate([0,-((mount_dia)/2+2*mount_thickness+1),0])rotate([0,180,90])BearingScrew(axis_dia = axis_dia, bearing_od=bearing_od, bearing_id=bearing_id, bearing_h=bearing_h, lead = 3.2);
 }
 
-//BearingScrewMount(12, 22, 8, 35);
+//BearingScrewMount();
+//BearingScrewMount(axis_dia = 12, bearing_od=22, thickness = 5, base_width = 40);
 //$fs=0.3;
 //$fa=3;
 //
@@ -125,3 +125,4 @@ module BearingScrewAssembly() {
 //
 //// 608ZZ
 //translate([100,0,0])BearingScrew(axis_dia = 12, bearing_od=22, bearing_id=8, bearing_h=7, lead = 3.2);
+
