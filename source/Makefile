@@ -44,10 +44,10 @@ $(TARGET)/ZMountBottom.stl: ZMount.scad $(EXTRAS)
 $(TARGET)/ZMountTop.stl: ZMount.scad $(EXTRAS)
 	$(OPENSCAD) -o $@ -D'$(OPENSCAD_SETTINGS);ZMountTop(rodspacing=rodspacing, rodsize = rod_diameter+0.2);' $<
 
-$(TARGET)/BedArm.stl: BedArm.scad $(EXTRAS)
+$(TARGET)/BedArm.stl: BedArm.scad BearingMount.scad $(EXTRAS)
 	$(OPENSCAD) -o $@ -D'$(OPENSCAD_SETTINGS);BedArm(bearing_diameter = bearing_diameter, bearing_length = bearing_length);' $<
 
-$(TARGET)/ZMountBracket.stl: BedStabilizerBracket.scad $(EXTRAS)
+$(TARGET)/ZMountBracket.stl: BedStabilizerBracket.scad BearingMount.scad $(EXTRAS)
 	$(OPENSCAD) -o $@ -D'$(OPENSCAD_SETTINGS);ZMountBracket(bearing_diameter = bearing_diameter, bearing_length = bearing_length);' $<
 
 $(TARGET)/BearingScrew.stl: BearingScrew.scad $(EXTRAS)

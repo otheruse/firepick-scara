@@ -1,6 +1,6 @@
 include <configuration.scad>
 include <MCAD/teardrop.scad>
-include <BedArm.scad>
+include <BearingMount.scad>
 include <BearingScrew.scad>
 
 module BracketBase(bearing_diameter = 15, bearing_length = 24){
