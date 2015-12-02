@@ -5,7 +5,7 @@ OPENSCAD_SETTINGS=$$fa=2;$$fs=0.2;
 
 EXTRAS=configuration.scad shapes.scad
 
-FILES=driveWheelRod.stl driveWheelTube.stl motorMountShort.stl motorMountLong.stl limitSwitchMount.stl pipeSupportLong.stl pipeSupportShort.stl BearingAdaptor.stl ZMountBottom.stl ZMountTop.stl BedArm.stl ZMountBracket.stl BearingScrew.stl BearingScrewMount.stl
+FILES=driveWheelRod.stl driveWheelTube.stl motorMountShort.stl motorMountLong.stl limitSwitchMount.stl pipeSupportLong.stl pipeSupportShort.stl BearingAdaptor.stl ZMountBottom.stl ZMountTop.stl BedArm.stl ZMountBracket.stl BearingScrew.stl ArmPsiA.stl ArmPsiB.stl ArmThetaA.stl ArmThetaB.stl ShaftCoupling.stl
 
 PARTS=$(join $(addsuffix $(TARGET)/, $(dir $(FILES))), $(notdir $(FILES))) 
 
@@ -39,10 +39,10 @@ $(TARGET)/BearingAdaptor.stl: BearingAdaptor.scad $(EXTRAS)
 	$(OPENSCAD) -o $@ -D'$(OPENSCAD_SETTINGS);BearingAdaptor();' $<
 
 $(TARGET)/ZMountBottom.stl: ZMount.scad $(EXTRAS)
-	$(OPENSCAD) -o $@ -D'$(OPENSCAD_SETTINGS);ZMountBottom(rodspacing=rodspacing, rodsize = rod_diameter+0.2);' $<
+	$(OPENSCAD) -o $@ -D'$(OPENSCAD_SETTINGS);ZMountBottom(rodspacing=rodspacing, rodsize = boltDia(rod_diameter));' $<
 
 $(TARGET)/ZMountTop.stl: ZMount.scad $(EXTRAS)
-	$(OPENSCAD) -o $@ -D'$(OPENSCAD_SETTINGS);ZMountTop(rodspacing=rodspacing, rodsize = rod_diameter+0.2);' $<
+	$(OPENSCAD) -o $@ -D'$(OPENSCAD_SETTINGS);ZMountTop(rodspacing=rodspacing, rodsize = boltDia(rod_diameter));' $<
 
 $(TARGET)/BedArm.stl: BedArm.scad BearingMount.scad $(EXTRAS)
 	$(OPENSCAD) -o $@ -D'$(OPENSCAD_SETTINGS);BedArm(bearing_diameter = bearing_diameter, bearing_length = bearing_length);' $<
@@ -51,10 +51,22 @@ $(TARGET)/ZMountBracket.stl: BedStabilizerBracket.scad BearingMount.scad $(EXTRA
 	$(OPENSCAD) -o $@ -D'$(OPENSCAD_SETTINGS);ZMountBracket(bearing_diameter = bearing_diameter, bearing_length = bearing_length);' $<
 
 $(TARGET)/BearingScrew.stl: BearingScrew.scad $(EXTRAS)
-	$(OPENSCAD) -o $@ -D'$(OPENSCAD_SETTINGS);BearingScrew(lead = 3.2);' $<
+	$(OPENSCAD) -o $@ -D'$(OPENSCAD_SETTINGS);BearingScrew(lead = 8);' $<
 
-$(TARGET)/BearingScrewMount.stl: BearingScrew.scad $(EXTRAS)
-	$(OPENSCAD) -o $@ -D'$(OPENSCAD_SETTINGS);BearingScrewMount();' $<
+$(TARGET)/ArmPsiA.stl: ArmPsi.scad $(EXTRAS)
+	$(OPENSCAD) -o $@ -D'$(OPENSCAD_SETTINGS);ArmPsiA();' $<
+
+$(TARGET)/ArmPsiB.stl: ArmPsi.scad $(EXTRAS)
+	$(OPENSCAD) -o $@ -D'$(OPENSCAD_SETTINGS);ArmPsiB();' $<
+
+$(TARGET)/ArmThetaA.stl: ArmTheta.scad $(EXTRAS)
+	$(OPENSCAD) -o $@ -D'$(OPENSCAD_SETTINGS);ArmThetaA();' $<
+
+$(TARGET)/ArmThetaB.stl: ArmTheta.scad $(EXTRAS)
+	$(OPENSCAD) -o $@ -D'$(OPENSCAD_SETTINGS);ArmThetaB();' $<
+
+$(TARGET)/ShaftCoupling.stl: ShaftCoupling.scad $(EXTRAS)
+	$(OPENSCAD) -o $@ -D'$(OPENSCAD_SETTINGS);ShaftCoupling(axis1_dia = drive_rod_diameter, axis2_dia = 5);' $<
 
 #assembly: $(TARGET) $(TARGET)/assembly.stl
 

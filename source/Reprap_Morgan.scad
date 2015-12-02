@@ -20,7 +20,7 @@ ENVELOPE_CHECK = false;
 THREADLESS = true;	// True for use of threadless ball screw in z-bracket
 
 
-MakeMorgan(1);
+//MakeMorgan(1);
 //translate([0,0,20])MorganBeltWheel();
 //translate([0,0,20])rotate([0,180,0])MorganBeltWheel();
 
@@ -2196,8 +2196,6 @@ grubdiameter = 3;
 leadscrewshaft = 7.5;
 leadscrewshaftlenght = 13;
 couplertopdiameter = 22;
-
-//leadscrew_profile();
 
 
 module MorganZCoupler ()
