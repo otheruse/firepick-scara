@@ -28,7 +28,7 @@ module BracketBase(bearing_diameter = 15, bearing_length = 24){
 			  }
 		
 			}		
-			cylinder(r=22,h=50);
+			cylinder(r=23,h=50);
 		}
 
 		cylinder(r=19,h=50);
@@ -97,14 +97,14 @@ module ZMountBracket(bearing_diameter = 15, bearing_length = 24) {
             BracketBase(bearing_diameter = bearing_diameter, bearing_length = bearing_length);
             // bearingscrew mount
             hull() {
-                translate([0,-40,0])cylinder(d=38, h=6);
-                translate([-19,-15,0])cube([38,1,6]);
+                translate([0,-40,0])cylinder(d=39, h=6);
+                translate([-19.5,-15,0])cube([39,1,6]);
             }
         }
         // Space for bearingScrew
-        translate([0,-40,6])cylinder(d=38.5, h=15);
+        translate([0,-40,6])cylinder(d=39.5, h=20);
         // Printability
-        translate([0,-40,21])cylinder(d1=38.5, d2=36.5, h=2);
+        translate([0,-40,26])cylinder(d1=39.5, d2=34.5, h=6);
         // axis
         translate([0,-40,0])cylinder(d=12, h=20);
         // drive tube
@@ -121,7 +121,7 @@ module ZMountBracket(bearing_diameter = 15, bearing_length = 24) {
 
 //$fa=3;
 //$fs=0.2;
-//ZMountBracket(bearing_diameter = 21, bearing_length = 30);
+ZMountBracket(bearing_diameter = 21, bearing_length = 30);
 
 //color([1,0,0,1])translate([0,-50,0])
 //ZMountBracket(bearing_diameter = 15, bearing_length = 24);

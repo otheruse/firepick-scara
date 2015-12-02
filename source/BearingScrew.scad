@@ -127,10 +127,10 @@ $fa=3;
 //%color([0,1,1,0.5])cylinder(d=8, h=40);
 //
 //// 623zz
-BearingScrew(axis_dia = 8, bearing_od=10, bearing_id=3, bearing_h=4, lead = 16, mount_screw = 3);
+//BearingScrew(axis_dia = 8, bearing_od=10, bearing_id=3, bearing_h=4, lead = 16, mount_screw = 3);
 //
 //// 624zz
-translate([40,0,0])BearingScrew(axis_dia = 8, bearing_od=13, bearing_id=4, bearing_h=5, lead = 16);
+//translate([40,0,0])BearingScrew(axis_dia = 8, bearing_od=13, bearing_id=4, bearing_h=5, lead = 16);
 //
 //// 608ZZ
 //translate([100,0,0])BearingScrew(axis_dia = 12, bearing_od=22, bearing_id=8, bearing_h=7, lead = 3.2, mount_screw= 8);
