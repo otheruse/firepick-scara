@@ -1,0 +1,34 @@
+Base plate:
+
+49.5mm tussen motor gaten
+
+16 mm centrum gat tot dischtsbijzijnde motor gat (x) 
+
+//50mm van centrum as to centrum motor (y)
+//9mm van centrum as to centrum motor (x, naar binnen)
+
+16mm diameter centrum gat
+180 mm centrum gat tot rand (y)
+12mm diameter as gaten (Waarom as gaten?)
+400mm breed (x)
+460mm lang (y)
+
+Support arm (lang) 150mm van centrum (x) 0mm (y)
+Support arm (kort) 150mm van centrum (y) 70mm (x)
+
+Top plate:
+
+200mm lang (y)
+320mm breed (x)
+
+26mm diameter centrum gat
+
+Centrum assen 160mm van de rand (y) (60mm van centrum)
+
+Support arm (lang) 70mm van centrum (y) 20mm (x)
+
+Support arm (kort) 140mm van centrum (x) 0mm (y)
+
+motor gat 40mm van centrum (y) 0mm (x)
+
+22mm diameter motor gat 

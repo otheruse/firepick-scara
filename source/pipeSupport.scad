@@ -17,7 +17,7 @@ module pipeSupport(PipeID = 26, PipeOD = 32, target_x = 0, target_y = 0, target_
 	difference(){
 		union(){
             // bottom
-			cylinder(r=(PipeID+2)/2, h=5, $fn = 100);
+			cylinder(r=(PipeID+2)/2, h=5);
 			rotate([deg_y,deg_x,0]){
 				
 				difference(){
@@ -32,18 +32,18 @@ module pipeSupport(PipeID = 26, PipeOD = 32, target_x = 0, target_y = 0, target_
 
 					// Rib anchor
 						translate([0,0,30])
-							rotate_extrude(convexity = 10, $fn = 100)
+							rotate_extrude(convexity = 10)
 								translate([(PipeID)/2-1.5,0,0])
-									circle(r=2, $fn = 20);	
+									circle(r=2);	
 
 							translate([0,0,15])
-							rotate_extrude(convexity = 10, $fn = 100)
+							rotate_extrude(convexity = 10)
 								translate([(PipeID)/2-1.5,0,0])
-									circle(r=2, $fn = 20);	
+									circle(r=2);	
 						
 					}
 					translate([0,0,-5])
-						cylinder(r=(PipeID-5)/2, h=45, $fn=100); 
+						cylinder(r=(PipeID-5)/2, h=45); 
 				}
 				
 			}
@@ -55,7 +55,7 @@ module pipeSupport(PipeID = 26, PipeOD = 32, target_x = 0, target_y = 0, target_
 			cylinder(d=m4_nut_dia, h=5, $fn=6);
 			
 		// M4 bolt	
-		cylinder(d=m4_dia,h=10, $fn = 20);
+		cylinder(d=m4_dia,h=10);
         
         // slice off bottom
 		translate([0,0,-10])
