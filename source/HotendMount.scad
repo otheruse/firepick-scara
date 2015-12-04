@@ -133,7 +133,7 @@ module E3DMountBase() {
 		union(){ 
 			cylinder(d=30, h=23);
             translate([0,0,26])rotate_extrude()translate([12,0])circle(d=3);
-			translate([0,0,23])cylinder(d2=26.5, d1=30, h=3);
+			translate([0,0,23])cylinder(d2=27, d1=30, h=3);
             cylinder(d=25, h=37);
         }
         E3DSlot(39);
@@ -156,9 +156,9 @@ module E3DMountClamp() {
         translate([-30,-30,0])cube([30,60,22]);
         // Slice top off
         translate([0,0,21.5])cylinder(d=40, h=60);
-        // screw head holes
-        translate([3,11,7])rotate([0,90,0])cylinder(d=m3_nut_dia, h=10);
-        translate([3,-11,7])rotate([0,90,0])cylinder(d=m3_nut_dia, h=10);
+        // screw head space
+        translate([5,11,7])rotate([0,90,0])cylinder(d=m3_nut_dia, h=10);
+        translate([5,-11,7])rotate([0,90,0])cylinder(d=m3_nut_dia, h=10);
 //        translate([8,11,7])teardrop(radius=m3_nut_dia/2, length=10, angle=90);
 //        translate([8,-11,7])teardrop(radius=m3_nut_dia/2, length=10, angle=90);
         // screw holes
@@ -200,6 +200,6 @@ $fa = 2;
 E3DMount();
 translate([0,40,0])E3DMountClamp();
 translate([0,70,0])difference() {
-    cylinder(d=15, h=100);
-    cylinder(d=8, h=100);
+    cylinder(d=13, h=50);
+    cylinder(d=8, h=50);
 }
