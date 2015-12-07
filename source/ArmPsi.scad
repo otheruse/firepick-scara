@@ -201,6 +201,8 @@ module ArmPsiB(){
         // Make space for movement
 		translate([0,0,22])
 			cylinder(r=20, h=10);
+        
+        translate([0,-30,0])cube([8,60,30]);
 
         // Nut slots
         hull() {

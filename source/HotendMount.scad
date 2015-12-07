@@ -6,8 +6,8 @@ module Hotend_stack(Hotend_D = 16.2, Hotend_H = 10, Mount_H = 12)
 	difference(){
 		union(){
 			
-			cylinder(r=30/2, h=14 + Mount_H);
-			cylinder(r=27/2, h=15 + Mount_H);
+			cylinder(d=30, h=14 + Mount_H);
+			cylinder(d=27, h=15 + Mount_H);
 
 		}
 			
@@ -126,27 +126,38 @@ module countersunkBolt(depth, nominalDia) {
     
 }
 
-module E3DMount() {
-    Mount_H = 12;
-	difference(){
-		union(){
-			cylinder(d=30, h=14 + Mount_H);
-			cylinder(d=27, h=15 + Mount_H);
+module E3DMountBase(withPrintSupport = false) {
+	difference() {
+		union() {
+			cylinder(d=30, h=24);
+			translate([0,0,24])cylinder(d1=30, d2=27, h=2);
             // 
-            cylinder(d=25, h=25 + Mount_H);
+            cylinder(d=25, h=37);
+            translate([0,0,26])rotate_extrude()translate([12.5,0])circle(d=2);
         }
-        E3DSlot(27+Mount_H);
-        // Screw holes
-        translate([0,-7,Mount_H+3])rotate([0,90,0])cylinder(d=m3_dia, h=40);
-        translate([10.5,-7,Mount_H+3])rotate([0,-90,0])countersunkBolt(depth = 11, nominalDia = 3);
-        translate([0,7,Mount_H+3])rotate([0,90,0])cylinder(d=m3_dia, h=40);
-        translate([10.5,7,Mount_H+3])rotate([0,-90,0])countersunkBolt(depth = 11, nominalDia = 3);
+        E3DSlot(39);
+    }
+    if (withPrintSupport) {
+        // Print support
+        color([1,0,0,1])translate([0,0,9.9-print_layer_height])cylinder(d=30, h=print_layer_height);
+        color([1,0,0,1])translate([0,0,1.2-print_layer_height])cylinder(d=30, h=print_layer_height);
+    }
+}
+
+module E3DMount() {
+	difference() {
+        E3DMountBase(true);
+        // mount screw holes
+        translate([0,-7,15])rotate([0,90,0])cylinder(d=m3_dia, h=40);
+        translate([10.5,-7,15])rotate([0,-90,0])countersunkBolt(depth = 11, nominalDia = 3);
+        translate([0,7,15])rotate([0,90,0])cylinder(d=m3_dia, h=40);
+        translate([10.5,7,15])rotate([0,-90,0])countersunkBolt(depth = 11, nominalDia = 3);
         // Slice half off
-        translate([-30,-30,0])cube([30,60,Mount_H+10]);
-        // screw holes
+        translate([-30,-30,0])cube([30,60,22]);
+        // cap screw holes
         translate([-1,11,7])rotate([0,90,0])cylinder(d=m3_dia, h=5);
         translate([-1,-11,7])rotate([0,90,0])cylinder(d=m3_dia, h=5);
-        // nutslot
+        // nutslots
         translate([3,11,7])hull() {
             rotate([0,90,0])rotate([0,0,30])cylinder(d=m3_nut_slot, h=m3_nut_height, $fn=6);
             translate([0,4,0])rotate([0,90,0])rotate([0,0,30])cylinder(d=m3_nut_slot, h=m3_nut_height, $fn=6);
@@ -158,10 +169,20 @@ module E3DMount() {
     }
 }
 
+module E3DMountCap() {
+    difference() {
+        E3DMountBase();
+        translate([0,0,21.5])cylinder(d=32, h=60);
+        // Slice half off
+        translate([-30,-30,0])cube([30,60,22]);
+    }
+}
+
 $fs = 0.2;
 $fa = 2;
 //translate([0,40,0])HotendMount();
 //translate([8,-40,0])rotate([0,-90,0])countersunkBolt(8, 3);
 
 E3DMount();
+translate([0,40,0])E3DMountCap();
 //translate([0,30,0])E3DSlot(50);
