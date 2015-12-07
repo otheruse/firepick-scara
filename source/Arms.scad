@@ -29,7 +29,7 @@ module PipeConnector() {
     }
 }
 
-module Fastener() {
+module Joint() {
     // 625zz
     bearing_od = 16;
     bearing_id = 5;
@@ -50,7 +50,7 @@ module Fastener() {
 module Arm1() {
     union() {
         PipeConnector();
-        translate([arm1_length,0,10])Fastener();
+        translate([arm1_length,0,10])Joint();
         difference() {
             translate([0,0,connector_length-connector_dia/2 - 5])difference() {
                 // arm
@@ -59,13 +59,14 @@ module Arm1() {
                 translate([0, connector_dia/2, -connector_dia/2 - 5])cube([arm1_length, connector_dia, connector_dia + 10]);
                 translate([0, -connector_dia*1.5, -connector_dia/2-5])cube([arm1_length, connector_dia, connector_dia + 10]);
             }
-            // inside
+            // pipeconnector inside
             translate([0,0,-1])cylinder(d = Drive_pipe_OD, h = connector_length + 2);
             // nut holes
             rotate([0,0,60]) {
                 translate([0,0,8])TightenerScrewHoles();
                 translate([0,0,connector_length - 8])TightenerScrewHoles();
             }
+            // space for joint
             translate([arm1_length,0,0])cylinder(d=connector_dia-1, h=connector_length);
         }
     }
