@@ -1,3 +1,5 @@
+include <MCAD/teardrop.scad>
+
 include <configuration.scad>
 include <ArmPsi.scad>
 
@@ -126,38 +128,59 @@ module countersunkBolt(depth, nominalDia) {
     
 }
 
-module E3DMountBase(withPrintSupport = false) {
+module E3DMountBase() {
 	difference() {
-		union() {
-			cylinder(d=30, h=24);
-			translate([0,0,24])cylinder(d1=30, d2=27, h=2);
-            // 
+		union(){ 
+			cylinder(d=30, h=23);
+            translate([0,0,26])rotate_extrude()translate([12,0])circle(d=3);
+			translate([0,0,23])cylinder(d2=27, d1=30, h=3);
             cylinder(d=25, h=37);
-            translate([0,0,26])rotate_extrude()translate([12.5,0])circle(d=2);
         }
         E3DSlot(39);
     }
-    if (withPrintSupport) {
-        // Print support
-        color([1,0,0,1])translate([0,0,9.9-print_layer_height])cylinder(d=30, h=print_layer_height);
-        color([1,0,0,1])translate([0,0,1.2-print_layer_height])cylinder(d=30, h=print_layer_height);
+    // Print support
+    color([1,0,0,1])translate([0,0,9.9-print_layer_height])cylinder(d=30, h=print_layer_height);
+    color([1,0,0,1])translate([0,0,1.2-print_layer_height])cylinder(d=30, h=print_layer_height);
+}
+
+module E3DMountClamp() {
+    difference() {
+        union() {
+            E3DMountBase();
+            // screw mount
+            translate([0,11,7])rotate([0,90,0])cylinder(d=m3_nut_dia+3, h=10);
+            translate([0,-11,7])rotate([0,90,0])cylinder(d=m3_nut_dia+3, h=10);
+        }
+        E3DSlot(39);
+        // Slice half off
+        translate([-30,-30,0])cube([30,60,22]);
+        // Slice top off
+        translate([0,0,21.5])cylinder(d=40, h=60);
+        // screw head space
+        translate([5,11,7])rotate([0,90,0])cylinder(d=m3_nut_dia, h=10);
+        translate([5,-11,7])rotate([0,90,0])cylinder(d=m3_nut_dia, h=10);
+//        translate([8,11,7])teardrop(radius=m3_nut_dia/2, length=10, angle=90);
+//        translate([8,-11,7])teardrop(radius=m3_nut_dia/2, length=10, angle=90);
+        // screw holes
+        translate([-1,11,7])rotate([0,90,0])cylinder(d=m3_dia, h=20);
+        translate([-1,-11,7])rotate([0,90,0])cylinder(d=m3_dia, h=20);
     }
 }
 
 module E3DMount() {
-	difference() {
-        E3DMountBase(true);
-        // mount screw holes
+	translate([0,0,37])rotate([180,0,0])difference(){
+        E3DMountBase();
+        // Screw holes
         translate([0,-7,15])rotate([0,90,0])cylinder(d=m3_dia, h=40);
         translate([10.5,-7,15])rotate([0,-90,0])countersunkBolt(depth = 11, nominalDia = 3);
         translate([0,7,15])rotate([0,90,0])cylinder(d=m3_dia, h=40);
         translate([10.5,7,15])rotate([0,-90,0])countersunkBolt(depth = 11, nominalDia = 3);
         // Slice half off
         translate([-30,-30,0])cube([30,60,22]);
-        // cap screw holes
-        translate([-1,11,7])rotate([0,90,0])cylinder(d=m3_dia, h=5);
-        translate([-1,-11,7])rotate([0,90,0])cylinder(d=m3_dia, h=5);
-        // nutslots
+        // screw holes
+        translate([-1,11,7])rotate([0,90,0])cylinder(d=m3_dia, h=20);
+        translate([-1,-11,7])rotate([0,90,0])cylinder(d=m3_dia, h=20);
+        // nutslot
         translate([3,11,7])hull() {
             rotate([0,90,0])rotate([0,0,30])cylinder(d=m3_nut_slot, h=m3_nut_height, $fn=6);
             translate([0,4,0])rotate([0,90,0])rotate([0,0,30])cylinder(d=m3_nut_slot, h=m3_nut_height, $fn=6);
@@ -169,20 +192,14 @@ module E3DMount() {
     }
 }
 
-module E3DMountCap() {
-    difference() {
-        E3DMountBase();
-        translate([0,0,21.5])cylinder(d=32, h=60);
-        // Slice half off
-        translate([-30,-30,0])cube([30,60,22]);
-    }
-}
-
 $fs = 0.2;
 $fa = 2;
 //translate([0,40,0])HotendMount();
 //translate([8,-40,0])rotate([0,-90,0])countersunkBolt(8, 3);
 
 E3DMount();
-translate([0,40,0])E3DMountCap();
-//translate([0,30,0])E3DSlot(50);
+translate([0,40,0])E3DMountClamp();
+translate([0,70,0])difference() {
+    cylinder(d=13, h=50);
+    cylinder(d=8, h=50);
+}
