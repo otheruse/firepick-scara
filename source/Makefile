@@ -5,7 +5,7 @@ OPENSCAD_SETTINGS=$$fa=2;$$fs=0.2;
 
 EXTRAS=configuration.scad shapes.scad
 
-FILES=driveWheelRod.stl driveWheelTube.stl motorMountShort.stl motorMountLong.stl limitSwitchMount.stl pipeSupportLong.stl pipeSupportShort.stl BearingAdaptor.stl ZMountBottom.stl ZMountTop.stl BedArm.stl ZMountBracket.stl BearingScrew.stl ArmPsiA.stl ArmPsiB.stl ArmThetaA.stl ArmThetaB.stl ShaftCoupling.stl
+FILES=driveWheelRod.stl driveWheelTube.stl motorMountShort.stl motorMountLong.stl limitSwitchMount.stl pipeSupportLong.stl pipeSupportShort.stl BearingAdaptor.stl ZMountBottom.stl ZMountTop.stl BedArm.stl ZMountBracket.stl BearingScrew.stl ArmPsiA.stl ArmPsiB.stl ArmThetaA.stl ArmThetaB.stl ShaftCoupling.stl Arm1.stl Arm2.stl ElbowNutSpacer.stl
 
 PARTS=$(join $(addsuffix $(TARGET)/, $(dir $(FILES))), $(notdir $(FILES))) 
 
@@ -67,6 +67,16 @@ $(TARGET)/ArmThetaB.stl: ArmTheta.scad $(EXTRAS)
 
 $(TARGET)/ShaftCoupling.stl: ShaftCoupling.scad $(EXTRAS)
 	$(OPENSCAD) -o $@ -D'$(OPENSCAD_SETTINGS);ShaftCoupling(axis1_dia = drive_rod_diameter, axis2_dia = 5);' $<
+
+$(TARGET)/Arm1.stl: Arms.scad $(EXTRAS)
+	$(OPENSCAD) -o $@ -D'$(OPENSCAD_SETTINGS);Arm1(arm_length = arm1_length, connector_length = connector_length, connector_dia = Drive_pipe_OD + 12);' $<
+
+$(TARGET)/Arm2.stl: Arms.scad $(EXTRAS)
+	$(OPENSCAD) -o $@ -D'$(OPENSCAD_SETTINGS);Arm2(arm_length = arm2_length);' $<
+
+$(TARGET)/ElbowNutSpacer.stl: Arms.scad $(EXTRAS)
+	$(OPENSCAD) -o $@ -D'$(OPENSCAD_SETTINGS);ElbowNutSpacer();' $<
+
 
 #assembly: $(TARGET) $(TARGET)/assembly.stl
 

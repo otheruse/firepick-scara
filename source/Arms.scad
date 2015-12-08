@@ -1,54 +1,21 @@
 include <shapes.scad>
 include <configuration.scad>
 
-arm1_length = 150;
-arm2_length = 150;
-connector_length = 60;
-connector_dia = Drive_pipe_OD + 12;
-tool_dia = 30;
-
-module TightenerScrewHoles() {
-    for(a=[00:120:359]) {
-        // screw hole
-        rotate([0,90,a])cylinder(d=m4_dia, h=connector_dia);
-        // nut hole
-        rotate([0,90,a])cylinder(d=m4_nut_dia, h=Drive_pipe_OD/2+m4_nut_height, $fn=6);
-        // screw head hole
-        rotate([0,90,a])translate([0,0,connector_dia/2])cylinder(d=m4_nut_dia, h=20);
-    }
-}
-
-module PipeConnector() {
+module ElbowJoint(height = 45, bearing_od = 22, bearing_id = 8, bearing_h = 7) {
     difference() {
-        cylinder(d = connector_dia, h = connector_length);
-        // inside
-        translate([0,0,-1])cylinder(d = Drive_pipe_OD, h = connector_length + 2);
-        // nut holes
-        rotate([0,0,60]) {
-            translate([0,0,8])TightenerScrewHoles();
-            translate([0,0,connector_length - 8])TightenerScrewHoles();
-        }
-    }
-}
-
-module Joint(height = 45) {
-    // 608zz
-    bearing_od = 22;
-    bearing_id = 8;
-    bearing_h = 7;
-   
-    difference() {
-        cylinder(d = connector_dia, h=height);
+        cylinder(d = 34, h=height);
         // bolt hole
-        translate([0,0,-1])cylinder(d=nutDia(bearing_id)+2, h = connector_dia + 10 + 2);
+        translate([0,0,-1])cylinder(d=nutDia(bearing_id)+2, h = 34 + 10 + 2);
         // bearing hole
         cylinder(d=bearing_od + 0.3, h = bearing_h);
         translate([0,0,height - bearing_h])cylinder(d=bearing_od + 0.3, h = bearing_h);
     }
+    // print support
+    color([1,0,0,1])translate([0,0,bearing_h])cylinder(d=bearing_od + 0.3, h = print_layer_height);
     
 }
 
-module TeardropBar(diameter = connector_dia, height = 45, length = arm1_length) {
+module TeardropBar(diameter, height = 45, length) {
     difference() {
         hull() {
             translate([0,0,diameter/2-diameter/9])rotate([0,90,0])cylinder(d=diameter, h = length);
@@ -58,60 +25,87 @@ module TeardropBar(diameter = connector_dia, height = 45, length = arm1_length) 
     }
 }
 
-module TeardropHollowBar(diameter = connector_dia, height = 45, length = arm1_length) {
+module TeardropHollowBar(diameter, height = 45, length) {
        difference() {
             TeardropBar(diameter = diameter, height = height, length = length);
-            translate([0,0,3])TeardropBar(diameter = diameter-6, height = height - 8, length = arm1_length);
+            translate([0,0,3])TeardropBar(diameter = diameter-6, height = height - 8, length = length);
         }
  }
 
 
-module Arm1() {
-    PipeConnector();
-    translate([arm1_length,0,0])Joint(height = 40);
-    difference() {
-        // Arm
-        TeardropHollowBar(diameter = connector_dia, height = 40, length = arm1_length);
-        // pipeconnector inside
-        translate([0,0,-1])cylinder(d = Drive_pipe_OD, h = connector_length + 2);
-        // nut holes
-        rotate([0,0,60]) {
-            translate([0,0,8])TightenerScrewHoles();
-            translate([0,0,connector_length - 8])TightenerScrewHoles();
-        }
-        // space for joint
-        translate([arm1_length,0,0])cylinder(d=connector_dia-1, h=connector_length);
+module TightenerScrewHoles(pipe_dia) {
+    for(a=[00:120:359]) {
+        // screw hole
+        rotate([0,90,a])cylinder(d=m4_dia, h=pipe_dia);
+        // nut hole
+        rotate([0,90,a])cylinder(d=m4_nut_dia, h=Drive_pipe_OD/2+m4_nut_height, $fn=6);
+        // screw head hole
+        rotate([0,90,a])translate([0,0,pipe_dia/2])cylinder(d=m4_nut_dia, h=20);
     }
 }
 
-module Arm2() {
+
+module Arm1(arm_length = 150, connector_length = 60, connector_dia = Drive_pipe_OD + 12) {
+    // 608zz
+    elbow_bearing_h = 7;
+    elbow_bearing_od = 22;
+    elbow_bearing_id = 8;
+    // 608zz
+    shoulder_bearing_h = 7;
+    shoulder_bearing_od = 22;
+    shoulder_bearing_id = 8;
+    translate([arm_length,0,0])ElbowJoint(height = 40, bearing_od = elbow_bearing_od, bearing_id = elbow_bearing_id, bearing_h = elbow_bearing_h);
+    difference() {
+        union() {
+            // Arm
+            TeardropHollowBar(diameter = connector_dia, height = 40, length = arm_length);
+            // Pipe connector
+            cylinder(d = connector_dia, h = connector_length);
+        }
+        // pipeconnector inside
+        translate([0,0,shoulder_bearing_h])cylinder(d = Drive_pipe_OD, h = connector_length);
+        // bearing inside
+        cylinder(d = shoulder_bearing_od + 0.3, h = shoulder_bearing_h);
+        // break
+        translate([0,0,shoulder_bearing_h + 1])rotate_extrude()translate([shoulder_bearing_od/2,0])circle(d=2);
+        // nut holes
+        rotate([0,0,60]) {
+            translate([0,0,16])TightenerScrewHoles(pipe_dia = connector_dia);
+            translate([0,0,connector_length - 8])TightenerScrewHoles(pipe_dia = connector_dia);
+        }
+        // space for elbow joint
+        translate([arm_length,0,0])cylinder(d=connector_dia-1, h=connector_length);
+    }
+}
+
+module Arm2(arm_length = 150) {
     dia = 24;
     height = 30;
-    bearing_id = 8;
+    elbow_bearing_id = 8;
     difference() {
         // Arm
         union() {
-            TeardropHollowBar(diameter = dia, height = height, length = arm2_length);
+            TeardropHollowBar(diameter = dia, height = height, length = arm_length);
             hull() {
-                translate([0,7,13])rotate([0,90,0])cylinder(d=8, h = arm2_length);
-                translate([0,8,5])rotate([0,90,0])cylinder(d=1, h = arm2_length);
+                translate([0,7,13])rotate([0,90,0])cylinder(d=8, h = arm_length);
+                translate([0,8,5])rotate([0,90,0])cylinder(d=1, h = arm_length);
             }
             mirror([0,1,0])hull() {
-                translate([0,7,13])rotate([0,90,0])cylinder(d=8, h = arm2_length);
-                translate([0,8,5])rotate([0,90,0])cylinder(d=1, h = arm2_length);
+                translate([0,7,13])rotate([0,90,0])cylinder(d=8, h = arm_length);
+                translate([0,8,5])rotate([0,90,0])cylinder(d=1, h = arm_length);
             }
         }
         // long screw holes
-        translate([-1,7,13])rotate([0,90,0])cylinder(d=boltDia(3), h = arm2_length+2);
-        translate([-1,-7,13])rotate([0,90,0])cylinder(d=boltDia(3), h = arm2_length+2);
-        // space for joint connector
-        translate([0,0,-1])cylinder(d = dia-1, h = connector_length + 2);
+        translate([-1,7,13])rotate([0,90,0])cylinder(d=boltDia(3), h = arm_length+2);
+        translate([-1,-7,13])rotate([0,90,0])cylinder(d=boltDia(3), h = arm_length+2);
+        // space for elbow joint connector
+        translate([0,0,-1])cylinder(d = dia-1, h = height + 2);
         // space for tool
-        translate([arm2_length,0,0])cylinder(d=connector_dia-1, h=connector_length);
+        translate([arm_length,0,0])cylinder(d=tool_dia-1, h=height);
         // slice sharp edged off 
-        translate([arm2_length-14,-30,0])cube([8,60,30]);
+        translate([arm_length-11,-30,0])cube([8,60,30]);
         // Nut slots
-        translate([arm2_length - 22, 0, 0]) {
+        translate([arm_length - 22, 0, 0]) {
             hull() {
                 translate([0,8,13])rotate([0,90,0])rotate([0,0,30])cylinder(d=nutSlot(3), h = nutHeight(3), $fn=6);
                 translate([0,15,13])rotate([0,90,0])cylinder(d=nutSlot(3), h = nutHeight(3), $fn=6);
@@ -127,18 +121,27 @@ module Arm2() {
     difference() {
         cylinder(d = dia, h = height);
         // bore hole
-        translate([0,0,-1])cylinder(d = bearing_id, h = connector_length + 2);
+        translate([0,0,-1])cylinder(d = elbow_bearing_id, h = height + 2);
         // nut hole
-        translate([0,0,-2])cylinder(d = nutDia(bearing_id), h = nutHeight(bearing_id), $fn=6);
+        translate([0,0,-2])cylinder(d = nutDia(elbow_bearing_id), h = nutHeight(elbow_bearing_id), $fn=6);
     }
+    // print support
+    color([1,0,0,1])translate([0,0,nutHeight(elbow_bearing_id)-2])cylinder(d = elbow_bearing_id, h = print_layer_height);
 
 }
 
-$fs = 0.2;
-$fa = 2;
+module ElbowNutSpacer() {
+    translate([75,-30,0])difference() {
+        cylinder(d = 13, h=40-2*7-8*0.8*2);
+        cylinder(d = 9, h=40-2*7-8*0.8*2);
+    }
+}
+//$fs = 0.2;
+//$fa = 2;
+//
+//translate([0,50,0])
+//Arm1();
+//
+//Arm2();
+//
 
-translate([0,50,0])Arm1();
-
-Arm2();
-
-//Fastener();

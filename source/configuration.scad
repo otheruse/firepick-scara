@@ -6,6 +6,11 @@ rod_diameter = 8;
 bearing_diameter = 15;
 bearing_length = 24;
 
+arm1_length = 150; // Length of first arm
+arm2_length = 150; // Length of second arm
+connector_length = 60; // length of pipe connector of first arm
+tool_dia = 30; // Diameter of tool head
+
 rodspacing = 175;		// Distance between rods:	175 standard, 190 wide
 PVC_pipe_OD = 32;		// Default 32mm
 PVC_pipe_ID = 26;	// measure pipe ID to adjust
