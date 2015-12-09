@@ -61,6 +61,14 @@ module Arm1(arm_length = 150, connector_length = 60, connector_dia = Drive_pipe_
             TeardropHollowBar(diameter = connector_dia, height = 40, length = arm_length);
             // Pipe connector
             cylinder(d = connector_dia, h = connector_length);
+            // support for screws 
+            intersection() {
+                TeardropBar(diameter = connector_dia, height = 40, length = arm_length);
+                for(a=[60:120:359]) {
+                    translate([0,0,16])rotate([0,90,a])translate([0,0,connector_dia/2])cylinder(d=m4_nut_dia+6, h=20);
+
+                }
+            }
         }
         // pipeconnector inside
         translate([0,0,shoulder_bearing_h])cylinder(d = Drive_pipe_OD, h = connector_length);
