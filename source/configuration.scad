@@ -12,6 +12,7 @@ connector_length = 60; // length of pipe connector of first arm
 tool_dia = 30; // Diameter of tool head
 
 rodspacing = 175;		// Distance between rods:	175 standard, 190 wide
+platform_height = 420;
 PVC_pipe_OD = 32;		// Default 32mm
 PVC_pipe_ID = 26;	// measure pipe ID to adjust
 Drive_pipe_OD = 22.5;	// Drive pipe outter diameter: 22mm default
