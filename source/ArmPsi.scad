@@ -206,12 +206,12 @@ module ArmPsiB(){
 
         // Nut slots
         hull() {
-            translate([15,8,13])rotate([0,90,0])rotate([0,0,30])cylinder(d=nutSlot(3), h = nutHeight(3), $fn=6);
-            translate([15,15,13])rotate([0,90,0])cylinder(d=nutSlot(3), h = nutHeight(3), $fn=6);
+            translate([15,8,13])rotate([0,90,0])rotate([0,0,30])cylinder(d=nutDia(3), h = nutHeight(3), $fn=6);
+            translate([15,15,13])rotate([0,90,0])cylinder(d=nutDia(3), h = nutHeight(3), $fn=6);
         }
         mirror([0,1,0])hull() {
-            translate([15,8,13])rotate([0,90,0])rotate([0,0,30])cylinder(d=nutSlot(3), h = nutHeight(3), $fn=6);
-            translate([15,15,13])rotate([0,90,0])cylinder(d=nutSlot(3), h = nutHeight(3), $fn=6);
+            translate([15,8,13])rotate([0,90,0])rotate([0,0,30])cylinder(d=nutDia(3), h = nutHeight(3), $fn=6);
+            translate([15,15,13])rotate([0,90,0])cylinder(d=nutDia(3), h = nutHeight(3), $fn=6);
         }
 	}
 	

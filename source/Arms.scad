@@ -115,12 +115,12 @@ module Arm2(arm_length = 150) {
         // Nut slots
         translate([arm_length - 22, 0, 0]) {
             hull() {
-                translate([0,8,13])rotate([0,90,0])rotate([0,0,30])cylinder(d=nutSlot(3), h = nutHeight(3), $fn=6);
-                translate([0,15,13])rotate([0,90,0])cylinder(d=nutSlot(3), h = nutHeight(3), $fn=6);
+                translate([0,8,13])rotate([0,90,0])rotate([0,0,30])cylinder(d=nutDia(3), h = nutHeight(3), $fn=6);
+                translate([0,15,13])rotate([0,90,0])cylinder(d=nutDia(3), h = nutHeight(3), $fn=6);
             }
             mirror([0,1,0])hull() {
-                translate([0,8,13])rotate([0,90,0])rotate([0,0,30])cylinder(d=nutSlot(3), h = nutHeight(3), $fn=6);
-                translate([0,15,13])rotate([0,90,0])cylinder(d=nutSlot(3), h = nutHeight(3), $fn=6);
+                translate([0,8,13])rotate([0,90,0])rotate([0,0,30])cylinder(d=nutDia(3), h = nutHeight(3), $fn=6);
+                translate([0,15,13])rotate([0,90,0])cylinder(d=nutDia(3), h = nutHeight(3), $fn=6);
             }
         }
 
@@ -140,8 +140,8 @@ module Arm2(arm_length = 150) {
 
 module ElbowNutSpacer() {
     translate([75,-30,0])difference() {
-        cylinder(d = 13, h=40-2*7-8*0.8*2);
-        cylinder(d = 9, h=40-2*7-8*0.8*2);
+        cylinder(d = 13, h=40-2*7-8*0.8*2+2);
+        cylinder(d = 9, h=40-2*7-8*0.8*2+2);
     }
 }
 //$fs = 0.2;

@@ -9,10 +9,10 @@ module tube(id = 5, od = 10, h) {
     }
 }
 
-module nutSlot(nutHeight, nutSlotDia, slotDepth) {
+module nutSlot(nutHeight, nutDia, slotDepth) {
     translate([0,0,slotDepth])rotate([0,90,0])hull() {
-        cylinder(d=nutSlotDia, h = nutHeight, $fn=6);
-        translate([slotDepth, 0,0])cylinder(d=nutSlotDia, h = nutHeight, $fn=6);
+        cylinder(d=nutDia, h = nutHeight, $fn=6);
+        translate([slotDepth, 0,0])cylinder(d=nutDia, h = nutHeight, $fn=6);
     }
 }
 
@@ -26,7 +26,7 @@ module ShaftCoupling(axis1_dia = 8, axis2_dia = 5) {
         // screw
         translate([0,0,screwHeight])rotate([0,90,0])cylinder(d=m3_dia, h=axis_dia + wall);
         // nut slot
-        translate([axis_dia/2+1,0,0])nutSlot(nutHeight = m3_nut_height, nutSlotDia = m3_nut_slot, slotDepth = screwHeight);
+        translate([axis_dia/2+1,0,0])nutSlot(nutHeight = m3_nut_height, nutDia = m3_nut_dia, slotDepth = screwHeight);
     }
     
     difference() {
@@ -49,7 +49,7 @@ module ShaftCoupling(axis1_dia = 8, axis2_dia = 5) {
     }
 }
 
-//ShaftCoupling();
+ShaftCoupling();
 
 //nutSlot(nutHeight = m3_nut_height, nutSlotDia = m3_nut_slot, slotDepth = 9);
 //$fs=0.3;
