@@ -32,3 +32,8 @@ Support arm (kort) 140mm van centrum (x) 0mm (y)
 motor gat 40mm van centrum (y) 0mm (x)
 
 22mm diameter motor gat 
+
+Pipes:
+Long: 458.476
+Short: 449.444
+
