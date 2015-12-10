@@ -16,7 +16,7 @@ PVC_pipe_OD = 32;		// Default 32mm
 PVC_pipe_ID = 26;	// measure pipe ID to adjust
 Drive_pipe_OD = 22.5;	// Drive pipe outter diameter: 22mm default
 
-function nutDia(nominalDiameter) = nominalDiameter*2 + 0.6;
+function nutDia(nominalDiameter) = nominalDiameter*1.8 + 1;
 function boltDia(nominalDiameter) = nominalDiameter + 0.2;
 function nutHeight(nominalDiameter) = nominalDiameter*0.8 + 0.4;
 function nutSlot(nominalDiameter) = nominalDiameter*1.8 + 0.4;
