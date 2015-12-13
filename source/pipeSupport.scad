@@ -12,7 +12,7 @@ module pipeSupport(PipeID = 26, PipeOD = 32, target_x = 0, target_y = 0, target_
     base_height = (distance-pipeLength)/2;
 	
 	angle = asin ( base_distance / distance);
-    dir_angle = atan2(target_x, target_x);
+    dir_angle = atan2(target_y, target_x);
     echo("Angle: ", angle, "dir_angle: ", dir_angle);
  
 	difference(){
@@ -86,7 +86,7 @@ module pipeSupportLong() {
 }
 
 module pipeSupportShort() {
-    pipeSupport(PVC_pipe_ID-0.8, PipeOD = PVC_pipe_OD, target_x = 0, target_y = 160, target_z=420, pipe = false, port = false);
+    pipeSupport(PVC_pipe_ID-0.8, PipeOD = PVC_pipe_OD, target_x = 70, target_y = 150, target_z=420, pipe = false, port = false);
 }
 
 //pipeSupportShort();
