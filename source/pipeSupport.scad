@@ -3,9 +3,9 @@ include <configuration.scad>
 include <MCAD/teardrop.scad>
 
 
-module pipeSupport(PipeID = 26, PipeOD = 32, target_x = 0, target_y = 0, target_z=1, pipe = false, port = false){
+module pipeSupport(PipeID = 26, PipeOD = 32, target_x = 0, target_y = 0, target_z, pipe = false, port = false){
 
-    pipeLength = 420;
+    pipeLength = target_z;
 	distance = sqrt (pow(target_x,2)+pow(target_y,2)+pow(target_z,2));
     base_distance = sqrt (pow(target_x,2)+pow(target_y,2));
 	echo ("Distance: ", distance);
@@ -86,7 +86,7 @@ module pipeSupportLong() {
 }
 
 module pipeSupportShort() {
-    pipeSupport(PVC_pipe_ID-0.8, PipeOD = PVC_pipe_OD, target_x = 70, target_y = 150, target_z=420, pipe = false, port = false);
+    pipeSupport(PVC_pipe_ID-0.8, PipeOD = PVC_pipe_OD, target_x = 0, target_y = 160, target_z=420, pipe = false, port = false);
 }
 
 //pipeSupportShort();
