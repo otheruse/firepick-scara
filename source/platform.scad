@@ -76,10 +76,10 @@ module base() {
         }
         // Motor mount holes
         for (i=[1,-1]) {
-            translate([i*(rodspacing/2-10),-50]) {
+            translate([i*(rodspacing/2-10),-60]) {
 //                #circle(d=m4_dia);
                 for (j=[-40,40]) {
-                    rotate(i*15)translate([j,0])circle(d=m4_dia);
+                    rotate(i*45)translate([j,0])circle(d=m4_dia);
                 }
             }
         }
@@ -87,4 +87,4 @@ module base() {
     }
 }
 
-base();
+//base();
