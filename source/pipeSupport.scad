@@ -81,11 +81,11 @@ module pipeSupport(PipeID = 26, PipeOD = 32, pipeLength = 420, target_x = 0, tar
 }
 
 module pipeSupportLong() {
-    pipeSupport(PipeID = PVC_pipe_ID-0.8, PipeOD = PVC_pipe_OD, pipeLength = 420, target_x = 130, target_y = 130, target_z=platform_height, pipe = false, port = true);
+    pipeSupport(PipeID = PVC_pipe_ID-0.8, PipeOD = PVC_pipe_OD, pipeLength = platform_height, target_x = 130, target_y = 130, target_z=platform_height, pipe = false, port = true);
 }
 
 module pipeSupportShort() {
-    pipeSupport(PVC_pipe_ID-0.8, PipeOD = PVC_pipe_OD, pipeLength = 420, target_x = 0, target_y = 160, target_z=platform_height, pipe = false, port = false);
+    pipeSupport(PVC_pipe_ID-0.8, PipeOD = PVC_pipe_OD, pipeLength = platform_height, target_x = 0, target_y = 160, target_z=platform_height, pipe = false, port = false);
 }
 
 //pipeSupportShort();
