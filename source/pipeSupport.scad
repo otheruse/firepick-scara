@@ -4,7 +4,6 @@ include <MCAD/teardrop.scad>
 
 
 module pipeSupport(PipeID = 26, PipeOD = 32, pipeLength = 420, target_x = 0, target_y = 0, target_z=1, pipe = false, port = false){
-
 	distance = sqrt (pow(target_x,2)+pow(target_y,2)+pow(target_z,2));
     xy_distance = sqrt (pow(target_x,2)+pow(target_y,2));
 	echo ("Distance: ", distance);

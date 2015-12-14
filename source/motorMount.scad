@@ -25,11 +25,12 @@ module MotorMount(Height = 50, Mheight = 48){
 			union() {
 				Motor(Height + 4, 44+10);
                 // base plates
-				translate([0,30,0])
+                hull() {
+				translate([0,28,0])
 					cylinder(r=20,h=4);
-				translate([0,-25,0])
+				translate([0,-28,0])
 					cylinder(r=20,h=4);
-
+                }
                 // Support structure
 				intersection(){
                     support_width = 3;
@@ -61,20 +62,16 @@ module MotorMount(Height = 50, Mheight = 48){
 			translate([65,0,25])cube([100,100,100],center=true);
             // slice top off
 			translate([-78,0,25])cube([100,100,100],center=true);
+            // Motor screw holes
             for (a=[0:90:180]) {
                 rotate([0,0,a])translate([0,22,Height - 5])cylinder(h=10,d=m3_dia);
             }
-			translate([0,-38, 0])
+            // Mount screw hole
+			translate([0,-40, 0])
 				cylinder(h=10,d=m3_dia);
-			intersection(){
-				translate([0,25,5])
-					cube([20,50,10],center=true);
-				translate([0,-38,0])
-					difference(){
-						cylinder(r=79.5, h=10);
-						cylinder(r=76.5, h=10);
-					}
-			}
+            // mount screw slot
+            rotate([0,0,90])translate([0,0,-1])linear_extrude(6)arc(w=m3_dia, r=40, angle=27);
+            // Motor center opening
 			translate([0,0,Height - 5])
 				cylinder(h=10,d=23);
 			
@@ -90,5 +87,5 @@ module MotorMount(Height = 50, Mheight = 48){
 
 //$fa=3;
 //$fs=0.3;
-MotorMount(Height=50);
+//MotorMount(Height=50);
 //mirror()MotorMount(Height=70);

@@ -17,8 +17,8 @@ module beltSlot(height) {
     for (i=[-5:10:5]) {
         translate([0, i, 0]) {
             translate([0, 0, height-m3_nut_height]) cylinder(d=m3_nut_dia, h=m3_nut_height);
-            cylinder(d=5.5, h=height);
             cylinder(d=m3_nut_dia, h=m3_nut_height, $fn=6);
+            cylinder(d=5.5, h=height);
             translate([4,0,2.5])thingy(width=2.5, height=height, length=8, r=8);
         }
     }
@@ -34,7 +34,7 @@ module wheelMount(radius, height, support_length) {
     }
 }
 
-module beltWheel(wheel_radius) {
+module beltWheel(wheel_radius, upSideDown = false) {
     flange = 1.5;
     module hexHole(r, h,edge=2)  {
         $fn=6;
@@ -60,21 +60,28 @@ module beltWheel(wheel_radius) {
            }
         }
         // Belt slot
-        rotate([0,0,30])translate([wheel_radius-6, 0, 0])beltSlot(drive_wheel_height);
+        if (upSideDown) {
+            rotate([0,0,30])translate([wheel_radius-6, 0, drive_wheel_height])rotate([180,0,0])beltSlot(drive_wheel_height);
+        }
+        else {
+            rotate([0,0,30])translate([wheel_radius-6, 0, 0])beltSlot(drive_wheel_height);
+        }
     }
     // print support
     color([1,0,0,1])for (i=[-5:10:5]) {
-        rotate([0,0,30])translate([wheel_radius-6, i, 2.5-print_layer_height])cylinder(d=m3_nut_dia, h=print_layer_height);
+        rotate([0,0,30])translate([wheel_radius-6, i, 2.5-print_layer_height])cylinder(d=5.5, h=print_layer_height);
     }
 }
 
 module beltWheelTube(wheel_radius) {
     difference() {
         union() {
-            beltWheel(wheel_radius, drive_wheel_height, drive_wheel_mount_radius);
+            beltWheel(wheel_radius);
             wheelMount(radius=19, height=40, support_length=11);
             // limit switch interruptors
-            linear_extrude(drive_wheel_height+8)rotate(90)arc(r=wheel_radius-16+.5, w=1, angle=5, $fa=1);
+            for (i=[-30,30,90]) {
+                linear_extrude(drive_wheel_height+8)rotate(i)arc(r=wheel_radius-16+.5, w=1, angle=5, $fa=1);
+            }
         }
         cylinder(d=Drive_pipe_OD, h=40);
         for(a=[00:120:359]) {
@@ -90,10 +97,12 @@ module beltWheelTube(wheel_radius) {
 module beltWheelRod(wheel_radius) {
     difference() {
         union() {
-            beltWheel(wheel_radius, drive_wheel_height, drive_wheel_mount_radius);
+            beltWheel(wheel_radius, upSideDown = true);
             wheelMount(radius=19, height=40, support_length=11);
             // limit switch interruptors
-            linear_extrude(drive_wheel_height+8)rotate(-30)arc(r=wheel_radius-16+.5, w=1, angle=5, $fa=1);
+            for (i=[-30,30,90]) {
+                linear_extrude(drive_wheel_height+8)rotate(i)arc(r=wheel_radius-16+.5, w=1, angle=5, $fa=1);
+            }
         }
         cylinder(d=m8_dia, h=40);
         cylinder(d=m8_nut_dia, h=m8_nut_height, $fn=6);
@@ -108,4 +117,6 @@ module beltWheelRod(wheel_radius) {
 //$fs=0.3;
 //$fa=2;
 //beltWheelTube(75);
+//
+//translate([0,160,0])beltWheelRod(75);
 

@@ -20,7 +20,7 @@ ENVELOPE_CHECK = false;
 THREADLESS = true;	// True for use of threadless ball screw in z-bracket
 
 
-//MakeMorgan(1);
+MakeMorgan(16);
 //translate([0,0,20])MorganBeltWheel();
 //translate([0,0,20])rotate([0,180,0])MorganBeltWheel();
 

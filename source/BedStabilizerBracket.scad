@@ -66,13 +66,24 @@ module BracketBearingMount(bearing_diameter = 15, bearing_length = 24) {
     }
     // bearing tube
     BearingTube(bearing_od = bearing_diameter, bearing_h=bearing_length, bearing_count=bearing_count, wall_thickness = wall_thickness);
-    //Limit switch interruptor
-    translate([-bearing_diameter/2-6,0,mount_height-1])cube([6,1,8]);
     // screw mounts
     translate([0,-bearing_diameter/2,15])screwMount(thickness = 11, hex=false);
     translate([0,-bearing_diameter/2,mount_height-15])screwMount(thickness = 11, hex=false);
     translate([0,bearing_diameter/2,15])mirror([0,1,0])screwMount(thickness = 13, hex=false);
     translate([0,bearing_diameter/2,mount_height-15])mirror([0,1,0])screwMount(thickness = 11, hex=false);
+    //Limit switch interruptors
+    #hull() {
+        translate([-bearing_diameter/2-5,0,mount_height-0.5])rotate([90,0,0])cylinder(d=1, h=1,center = true);
+        translate([-bearing_diameter/2-15,0,mount_height-8])rotate([90,0,0])cylinder(d=1, h=1,center = true);
+        translate([-bearing_diameter/2-5,0,mount_height-25])rotate([90,0,0])cylinder(d=1, h=1,center = true);
+        translate([-bearing_diameter/2-15,0,mount_height-0.5])rotate([90,0,0])cylinder(d=1, h=1,center = true);
+    }
+    #hull() {
+        translate([-bearing_diameter/2-5,0,0.5])rotate([90,0,0])cylinder(d=1, h=1,center = true);
+        translate([-bearing_diameter/2-15,0,8])rotate([90,0,0])cylinder(d=1, h=1,center = true);
+        translate([-bearing_diameter/2-5,0,25])rotate([90,0,0])cylinder(d=1, h=1,center = true);
+        translate([-bearing_diameter/2-15,0,0.5])rotate([90,0,0])cylinder(d=1, h=1,center = true);
+    }
 }
 
 
