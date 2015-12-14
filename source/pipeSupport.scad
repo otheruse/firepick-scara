@@ -75,9 +75,22 @@ module pipeSupport(PipeID = 26, PipeOD = 32, pipeLength = 420, target_x = 0, tar
 	if (pipe == true){
 		rotate([0,0,dir_angle])rotate([0,angle,0])
 			translate([0,0,base_height])
-			color([0.8,0.8,0.8,0.5])cylinder(r=PipeOD/2, h=pipeLength);
+			%cylinder(r=PipeOD/2, h=pipeLength);
 	}
 
+}
+
+module pipe(PipeOD = 32, pipeLength = 420, target_x = 0, target_y = 0, target_z=1) {
+	distance = sqrt (pow(target_x,2)+pow(target_y,2)+pow(target_z,2));
+    xy_distance = sqrt (pow(target_x,2)+pow(target_y,2));
+	echo ("Distance: ", distance);
+    base_height = (distance-pipeLength)/2;
+	
+	angle = atan2 (xy_distance, target_z);
+    dir_angle = atan2(target_y, target_x);
+    rotate([0,0,dir_angle])rotate([0,angle,0])
+        translate([0,0,base_height])
+        color([0.8,0.8,0.8,0.5])cylinder(r=PipeOD/2, h=pipeLength);
 }
 
 module pipeSupportLong(pipe = false) {
@@ -87,6 +100,7 @@ module pipeSupportLong(pipe = false) {
 module pipeSupportShort(pipe = false) {
     pipeSupport(PVC_pipe_ID-0.8, PipeOD = PVC_pipe_OD, pipeLength = platform_height, target_x = 0, target_y = 160, target_z=platform_height, pipe = pipe, port = false);
 }
+
 
 //pipeSupportShort();
 //translate([0,160,420])rotate([0,0,180])mirror([0,0,1])pipeSupport(PVC_pipe_ID-0.8, PipeOD = PVC_pipe_OD, target_x = 0, target_y = 160, target_z=420, pipe = true, port = false);

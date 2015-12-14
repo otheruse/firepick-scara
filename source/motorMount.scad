@@ -67,13 +67,11 @@ module MotorMount(Height = 50, Mheight = 48){
                 rotate([0,0,a])translate([0,22,Height - 5])cylinder(h=10,d=m3_dia);
             }
             // Mount screw hole
-			translate([0,-40, 0])
-				cylinder(h=10,d=m3_dia);
+			translate([0,-40, 0])cylinder(h=10,d=m3_dia);
             // mount screw slot
             rotate([0,0,90])translate([0,0,-1])linear_extrude(6)arc(w=m3_dia, r=40, angle=27);
             // Motor center opening
-			translate([0,0,Height - 5])
-				cylinder(h=10,d=23);
+			translate([0,0,Height - 5])cylinder(h=10,d=23);
 			
             // Take edges off large opening
 			translate([15,0,Height/2])cube([10,37,Height],center=true);

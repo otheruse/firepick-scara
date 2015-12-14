@@ -19,7 +19,8 @@ Leadnut_thread = false;// Apply the thread of the leadscrew nut to the Z coupler
 ENVELOPE_CHECK = false;
 THREADLESS = true;	// True for use of threadless ball screw in z-bracket
 
-
+$fa = 2;
+$fs = 0.3;
 MakeMorgan(16);
 //translate([0,0,20])MorganBeltWheel();
 //translate([0,0,20])rotate([0,180,0])MorganBeltWheel();
