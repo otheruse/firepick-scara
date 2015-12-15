@@ -49,7 +49,7 @@ module ShaftCoupling(axis1_dia = 8, axis2_dia = 5) {
     }
 }
 
-ShaftCoupling();
+//ShaftCoupling();
 
 //nutSlot(nutHeight = m3_nut_height, nutSlotDia = m3_nut_slot, slotDepth = 9);
 //$fs=0.3;

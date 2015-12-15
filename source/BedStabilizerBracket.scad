@@ -74,15 +74,15 @@ module BracketBearingMount(bearing_diameter = 15, bearing_length = 24) {
     //Limit switch interruptors
     hull() {
         translate([-bearing_diameter/2-5,0,mount_height-0.5])rotate([90,0,0])cylinder(d=1, h=1,center = true);
-        translate([-bearing_diameter/2-15,0,mount_height-8])rotate([90,0,0])cylinder(d=1, h=1,center = true);
+        translate([-bearing_diameter/2-18,0,mount_height-8])rotate([90,0,0])cylinder(d=1, h=1,center = true);
         translate([-bearing_diameter/2-5,0,mount_height-25])rotate([90,0,0])cylinder(d=1, h=1,center = true);
-        translate([-bearing_diameter/2-15,0,mount_height-0.5])rotate([90,0,0])cylinder(d=1, h=1,center = true);
+        translate([-bearing_diameter/2-18,0,mount_height-0.5])rotate([90,0,0])cylinder(d=1, h=1,center = true);
     }
     hull() {
         translate([-bearing_diameter/2-5,0,0.5])rotate([90,0,0])cylinder(d=1, h=1,center = true);
-        translate([-bearing_diameter/2-15,0,8])rotate([90,0,0])cylinder(d=1, h=1,center = true);
+        translate([-bearing_diameter/2-18,0,8])rotate([90,0,0])cylinder(d=1, h=1,center = true);
         translate([-bearing_diameter/2-5,0,25])rotate([90,0,0])cylinder(d=1, h=1,center = true);
-        translate([-bearing_diameter/2-15,0,0.5])rotate([90,0,0])cylinder(d=1, h=1,center = true);
+        translate([-bearing_diameter/2-18,0,0.5])rotate([90,0,0])cylinder(d=1, h=1,center = true);
     }
 }
 

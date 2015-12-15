@@ -1,7 +1,7 @@
 include <shapes.scad>
 include <configuration.scad>
 
-module Motor(MotorH = 50, MotorW = 42){
+module MotorBody(MotorH = 50, MotorW = 42){
 	translate([0,0,MotorH/2])
 		intersection(){
 			cube([MotorW*1.285,MotorW*1.285,MotorH],center=true);
@@ -9,6 +9,12 @@ module Motor(MotorH = 50, MotorW = 42){
 				cube([MotorW,MotorW,MotorH],center=true);
 		}
 
+}
+
+module Motor(MotorH = 50, MotorW = 42) {
+    rotate([0,0,45])MotorBody(MotorH = MotorH, MotorW = MotorW);
+    translate([0,0,MotorH])cylinder(d=22, h=1);
+    translate([0,0,MotorH])cylinder(d=5, h=22);
 }
 
 module MotorMount(Height = 50, Mheight = 48){
@@ -23,7 +29,7 @@ module MotorMount(Height = 50, Mheight = 48){
 		difference(){
 			
 			union() {
-				Motor(Height + 4, 44+10);
+				MotorBody(Height + 4, 44+10);
                 // base plates
                 hull() {
 				translate([0,28,0])
@@ -57,7 +63,7 @@ module MotorMount(Height = 50, Mheight = 48){
 				}
 
 			}
-			translate([0,0,0])Motor(Height, 44);
+			translate([0,0,0])MotorBody(Height, 44);
             // slice bottom off
 			translate([65,0,25])cube([100,100,100],center=true);
             // slice top off
@@ -83,6 +89,7 @@ module MotorMount(Height = 50, Mheight = 48){
 
 }
 
+//Motor();
 //$fa=3;
 //$fs=0.3;
 //MotorMount(Height=50);

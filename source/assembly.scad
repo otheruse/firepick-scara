@@ -10,6 +10,7 @@ include <BearingScrew.scad>
 include <limitSwitchHolder.scad>
 include <Arms.scad>
 include <HotendMount.scad>
+include <ShaftCoupling.scad>
 
 base_thickness = 10;
 module assembly() {
@@ -22,8 +23,12 @@ module assembly() {
         translate([i*(rodspacing/2-10),-60, base_thickness])rotate([90+i*45,-90,0])MotorMount(Height=60+i*10);
     }
     // limit switch holders
-    translate([rodspacing/2, 0, base_thickness+100])rotate([180,0,180])render()limitSwitchHolder();
-    translate([-rodspacing/2, 0, base_thickness+35])render()limitSwitchHolder();
+    color([1,0,0,1]) {
+        translate([rodspacing/2, 0, base_thickness+105])rotate([180,0,-90])render()limitSwitchHolderL(rod_dia = rod_diameter);
+        translate([-rodspacing/2, 0, base_thickness+30])rotate([0,0,-90])render()limitSwitchHolderL(rod_dia = rod_diameter);
+        translate([rodspacing/2,0,base_thickness + platform_height - 10])rotate([0,180,0])render()limitSwitchHolderP(rod_dia = rod_diameter);
+        translate([-rodspacing/2,0,100])render()limitSwitchHolderP(rod_dia = rod_diameter);
+    }
     // Zmount bottom
     color([0,0,0.5,1])render()translate([0,0,base_thickness])ZMountBottom(rodspacing = rodspacing, rodsize = rod_diameter, thickness = 3);
     // Zmount top
@@ -61,6 +66,8 @@ module assembly() {
         // Bearing screw
 //        translate([0,40,0])rotate([0,0,120])render()BearingScrew(axis_dia = 8, bearing_od=13, bearing_id=4, bearing_h=5, lead = 16);    
     }
+    // Z motor coupling
+    translate([0,40,platform_height + 2*base_thickness - 25])ShaftCoupling();
     // Arms
     translate([0,0,platform_height +base_thickness*2 + 70])rotate([180,0,-90])render()Arm1();
     translate([0,-arm1_length,platform_height +base_thickness*2 + 28])rotate([180,0,-90])render()Arm2();
@@ -70,7 +77,7 @@ module assembly() {
         rotate([0,0,180])E3DMountClamp();
     }
 
-    // Rods & pipes
+    // Hardware parts
     color([0.7,0.7,0.7,0.5]) {
         // axes
         for (i=[1,-1]) {
@@ -79,7 +86,7 @@ module assembly() {
         // drive pipe
         translate([0, 0, base_thickness + 70])cylinder(d=Drive_pipe_OD, h=430);
         // drive rod
-        translate([0, 0, 0])cylinder(d=8, h=600);
+        translate([0, 0, 0])cylinder(d=8, h=550);
         // elbow rod
         translate([0,-arm1_length,platform_height +base_thickness*2 -10])cylinder(d=8, h=100);
         // Z screw
@@ -89,6 +96,12 @@ module assembly() {
         translate([150,0,base_thickness])rotate([0,0,90])pipe(PipeOD = PVC_pipe_OD, pipeLength = platform_height, target_x = 130, target_y = 130, target_z=platform_height);
         translate([-140,160,base_thickness])rotate([0,0,180])pipe(PipeOD = PVC_pipe_OD, pipeLength = platform_height, target_x = 0, target_y = 160, target_z=platform_height);
         translate([140,160,base_thickness])rotate([0,0,180])pipe(PipeOD = PVC_pipe_OD, pipeLength = platform_height, target_x = 0, target_y = 160, target_z=platform_height);
+        // Z motor
+        translate([0,40,platform_height + 40 + 2*base_thickness])rotate([180,0,0])Motor(MotorH = 40);
+        // Arm motors
+        for (i=[1,-1]) {
+            translate([i*(rodspacing/2-10),-60, base_thickness + 10 +i*10])Motor();
+    }
     }
 
 }
