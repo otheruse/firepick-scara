@@ -17,7 +17,7 @@ module nutSlot(nutHeight, nutDia, slotDepth) {
 }
 
 module ShaftCoupling(axis1_dia = 8, axis2_dia = 5) {
-    height = 20;
+    height = 36;
     partHeight = (height-2)/2;
     screwHeight = 4.5;
     wall = 14;

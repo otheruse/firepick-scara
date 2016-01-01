@@ -11,6 +11,7 @@ include <limitSwitchHolder.scad>
 include <Arms.scad>
 include <HotendMount.scad>
 include <ShaftCoupling.scad>
+include <HeatbedMount.scad>
 
 base_thickness = 10;
 module assembly() {
@@ -54,27 +55,33 @@ module assembly() {
         translate([140,0,platform_height + base_thickness])mirror([0,0,1])render()pipeSupportShort();
     }
     // Bed
-    translate([0,0,300]) {
+    color([0.7,1,1,1])translate([0,0,300]) {
         // bed bracket
         rotate([0,180,180])render()ZMountBracket(bearing_diameter = bearing_diameter, bearing_length = bearing_length);
         // Bed arms
         for (i=[1,-1]) {
             translate([i*rodspacing/2,0,0])rotate([0,180,180])render()BedArm(bearing_diameter = bearing_diameter, bearing_length = bearing_length);
         }
+        // Bed mount
+        render()translate([0,-40,10])rotate([0,0,90])linear_extrude(3)HeatbedMount();
         // Bearing screw
         translate([0,40,-4])rotate([0,0,120])mirror([0,0,1])render()BearingScrew(axis_dia = 8, bearing_od=13, bearing_id=4, bearing_h=5, lead = 16);    
         // Bearing screw
 //        translate([0,40,0])rotate([0,0,120])render()BearingScrew(axis_dia = 8, bearing_od=13, bearing_id=4, bearing_h=5, lead = 16);    
     }
     // Z motor coupling
-    translate([0,40,platform_height + 2*base_thickness - 25])ShaftCoupling();
+    color([0,0,0,1])translate([0,40,platform_height + 2*base_thickness - 25])ShaftCoupling();
     // Arms
-    translate([0,0,platform_height +base_thickness*2 + 70])rotate([180,0,-90])render()Arm1();
-    translate([0,-arm1_length,platform_height +base_thickness*2 + 28])rotate([180,0,-90])render()Arm2();
-    // Tool head
-    translate([0,-arm1_length-arm2_length,platform_height +base_thickness*2])rotate([0,0,90])render() {
-        translate([0,0,37])rotate([180,0,0])E3DMount();
-        rotate([0,0,180])E3DMountClamp();
+    color([0.7,0.7,1,1]) {
+        translate([0,0,platform_height +base_thickness*2 + 70])rotate([180,0,-90])render()Arm1();
+        translate([0,-arm1_length,platform_height +base_thickness*2 + 28])rotate([180,0,-90])render()Arm2();
+    }
+        // Tool head
+     color([1,0.7,0.7,1]) {
+       translate([0,-arm1_length-arm2_length,platform_height +base_thickness*2])rotate([0,0,90])render() {
+            translate([0,0,37])rotate([180,0,0])E3DMount();
+            rotate([0,0,180])E3DMountClamp();
+        }
     }
 
     // Hardware parts

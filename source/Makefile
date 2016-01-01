@@ -5,7 +5,7 @@ OPENSCAD_SETTINGS=$$fa=2;$$fs=0.2;
 
 EXTRAS=configuration.scad shapes.scad
 
-FILES=driveWheelRod.stl driveWheelTube.stl motorMountShort.stl motorMountLong.stl limitSwitchMount.stl pipeSupportLong.stl pipeSupportShort.stl BearingAdaptor.stl ZMountBottom.stl ZMountTop.stl BedArm.stl ZMountBracket.stl BearingScrew.stl ArmPsiA.stl ArmPsiB.stl ArmThetaA.stl ArmThetaB.stl ShaftCoupling.stl Arm1.stl Arm2.stl ElbowNutSpacer.stl
+FILES=driveWheelRod.stl driveWheelTube.stl motorMountShort.stl motorMountLong.stl limitSwitchMountL.stl limitSwitchMountP.stl pipeSupportLong.stl pipeSupportShort.stl BearingAdaptor.stl ZMountBottom.stl ZMountTop.stl BedArm.stl ZMountBracket.stl BearingScrew.stl ArmPsiA.stl ArmPsiB.stl ArmThetaA.stl ArmThetaB.stl ShaftCoupling.stl Arm1.stl Arm2.stl ElbowNutSpacer.stl
 
 PARTS=$(join $(addsuffix $(TARGET)/, $(dir $(FILES))), $(notdir $(FILES))) 
 
@@ -26,8 +26,11 @@ $(TARGET)/motorMountShort.stl: motorMount.scad $(EXTRAS)
 $(TARGET)/motorMountLong.stl: motorMount.scad $(EXTRAS)
 	$(OPENSCAD) -o $@ -D'$(OPENSCAD_SETTINGS);mirror()MotorMount(Height=70);' $<
 
-$(TARGET)/limitSwitchMount.stl: limitSwitchHolder.scad $(EXTRAS)
-	$(OPENSCAD) -o $@ -D'$(OPENSCAD_SETTINGS);limitSwitchHolder(rod_dia = rod_diameter);' $<
+$(TARGET)/limitSwitchMountL.stl: limitSwitchHolder.scad $(EXTRAS)
+	$(OPENSCAD) -o $@ -D'$(OPENSCAD_SETTINGS);limitSwitchHolderL(rod_dia = rod_diameter);' $<
+
+$(TARGET)/limitSwitchMountP.stl: limitSwitchHolder.scad $(EXTRAS)
+	$(OPENSCAD) -o $@ -D'$(OPENSCAD_SETTINGS);limitSwitchHolderP(rod_dia = rod_diameter);' $<
 
 $(TARGET)/pipeSupportLong.stl: pipeSupport.scad $(EXTRAS)
 	$(OPENSCAD) -o $@ -D'$(OPENSCAD_SETTINGS);pipeSupportLong();' $<
