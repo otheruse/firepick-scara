@@ -43,8 +43,8 @@ module HeatbedMount(xdist = 209, ydist=209) {
         // Arm mount holes
         for (j = [-1,1]) {
             translate([xdist/2, j*rodspacing/2])for (i=[-1,1]) {
-                translate([-10, i*10])circle(d=m3_dia);
-                translate([-120, i*10])circle(d=m3_dia);
+                translate([-10, i*6])circle(d=m3_dia);
+                translate([-120, i*6])circle(d=m3_dia);
             }
         }
         
@@ -56,4 +56,4 @@ module HeatbedMount(xdist = 209, ydist=209) {
     }
 }
 
-HeatbedMount();
+//HeatbedMount();

@@ -11,7 +11,7 @@ include <limitSwitchHolder.scad>
 include <Arms.scad>
 include <HotendMount.scad>
 include <ShaftCoupling.scad>
-include <HeatbedMount.scad>
+include <BedMount.scad>
 
 base_thickness = 10;
 module assembly() {

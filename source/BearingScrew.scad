@@ -21,9 +21,11 @@ module BearingScrew(axis_dia = 8, bearing_od=13, bearing_id=4, bearing_h=5, lead
     height=nutHeight(bearing_id) + bearing_h + 3 + lead/4;
     clamp_width = 20;
     clamp_length = mount_dia/2+7;
-    clamp_split = 1.5;
+    clamp_split = 2;
     
     thread_angle = atan(lead/(8*pi));
+    
+    %color([0,0.4,0,1])translate([0,0,-40])cylinder(d=axis_dia, h=80);
     
     translate([0,0,height])rotate([180,0,0]) {
             difference() {
@@ -34,7 +36,7 @@ module BearingScrew(axis_dia = 8, bearing_od=13, bearing_id=4, bearing_h=5, lead
                 translate([-clamp_width/2,0,0])cube(size=[clamp_width, clamp_length, height]);
             }
             // Split
-            translate([-clamp_split/2,0,0])cube(size=[clamp_split, clamp_length, height]);
+            translate([-clamp_split/2,0,-1])cube(size=[clamp_split, clamp_length, height+2]);
             // Space for axis
             cylinder(d=axis_dia + 4, h=height);
             translate([0,0,lead/16])for (a=[60:120:360]) {
@@ -130,7 +132,7 @@ $fa=3;
 //BearingScrew(axis_dia = 8, bearing_od=10, bearing_id=3, bearing_h=4, lead = 16, mount_screw = 3);
 //
 //// 624zz
-//translate([40,0,0])BearingScrew(axis_dia = 8, bearing_od=13, bearing_id=4, bearing_h=5, lead = 16);
+//translate([40,0,0])BearingScrew(axis_dia = 8, bearing_od=13, bearing_id=4, bearing_h=5, lead = 8);
 //
 //// 608ZZ
 //translate([100,0,0])BearingScrew(axis_dia = 12, bearing_od=22, bearing_id=8, bearing_h=7, lead = 3.2, mount_screw= 8);
