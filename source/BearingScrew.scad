@@ -25,7 +25,7 @@ module BearingScrew(axis_dia = 8, bearing_od=13, bearing_id=4, bearing_h=5, lead
     
     thread_angle = atan(lead/(8*pi));
     
-    %color([0,0.4,0,1])translate([0,0,-40])cylinder(d=axis_dia, h=80);
+//    %color([0,0.4,0,1])translate([0,0,-40])cylinder(d=axis_dia, h=80);
     
     translate([0,0,height])rotate([180,0,0]) {
             difference() {

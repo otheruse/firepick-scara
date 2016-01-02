@@ -13,6 +13,7 @@ include <HotendMount.scad>
 include <ShaftCoupling.scad>
 include <BedMount.scad>
 
+z_height = 100;
 base_thickness = 10;
 module assembly() {
     // base 
@@ -55,7 +56,7 @@ module assembly() {
         translate([140,0,platform_height + base_thickness])mirror([0,0,1])render()pipeSupportShort();
     }
     // Bed
-    color([0.7,1,1,1])translate([0,0,300]) {
+    color([0.7,1,1,1])translate([0,0,platform_height - z_height-12]) {
         // bed bracket
         rotate([0,180,180])render()ZMountBracket(bearing_diameter = bearing_diameter, bearing_length = bearing_length);
         // Bed arms
