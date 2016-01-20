@@ -4,7 +4,7 @@ include <configuration.scad>
 module ElbowJoint(height = 45, bearing_od = 22, bearing_id = 8, bearing_h = 7) {
     difference() {
         cylinder(d = 34, h=height);
-        // bolt hole
+         // bolt hole
         translate([0,0,-1])cylinder(d=nutDia(bearing_id)+2, h = 34 + 10 + 2);
         // bearing hole
         cylinder(d=bearing_od + 0.3, h = bearing_h);
@@ -70,6 +70,11 @@ module Arm1(arm_length = 150, connector_length = 60, connector_dia = Drive_pipe_
                 }
             }
         }
+        // grooves for alignment
+        translate([0,18,connector_length/2])rotate([0,0,45])cube(size=[2,2,connector_length+2], center=true);
+        translate([0,-18,connector_length/2])rotate([0,0,45])cube(size=[2,2,connector_length+2], center=true);
+        translate([0,0,-1])rotate([0,45,0])cube(size=[2,connector_dia + 2,2], center=true);
+        
         // pipeconnector inside
         translate([0,0,shoulder_bearing_h])cylinder(d = Drive_pipe_OD, h = connector_length);
         // bearing inside
@@ -125,9 +130,18 @@ module Arm2(arm_length = 150) {
         }
 
     }
+    module arrow(d = 1) {
+        dd = sqrt(0.75*d*d);
+         polyhedron(points=[[dd,0,0], [0,-d/2,0], [0,d/2,0], [0,0,dd]], faces=[[0,2,1], [0,1,3], [2,0,3], [1,2,3]]);
+   }
+    
     // joint side
     difference() {
-        cylinder(d = dia, h = height);
+        union() {
+            cylinder(d = dia, h = height);
+            rotate([0,0,90])translate([dia/2-1, 0, 0])arrow(d=5);
+            rotate([0,0,-90])translate([dia/2-1, 0, 0])arrow(d=5);
+        }
         // bore hole
         translate([0,0,-1])cylinder(d = elbow_bearing_id, h = height + 2);
         // nut hole
@@ -144,6 +158,7 @@ module ElbowNutSpacer() {
         cylinder(d = 9, h=40-2*7-8*0.8*2+2);
     }
 }
+
 //$fs = 0.2;
 //$fa = 2;
 //
@@ -151,5 +166,5 @@ module ElbowNutSpacer() {
 //Arm1();
 //
 //Arm2();
-//
+
 

@@ -1,16 +1,20 @@
 OPENSCAD:=$(shell which openscad)
 TARGET=../stl
+DXFTARGET=../dxf
 
-OPENSCAD_SETTINGS=$$fa=2;$$fs=0.2;
+OPENSCAD_SETTINGS=$$fa=2;$$fs=0.3;
 
 EXTRAS=configuration.scad shapes.scad
 
-FILES=driveWheelRod.stl driveWheelTube.stl motorMountShort.stl motorMountLong.stl limitSwitchMountL.stl limitSwitchMountP.stl pipeSupportLong.stl pipeSupportShort.stl BearingAdaptor.stl ZMountBottom.stl ZMountTop.stl BedArm.stl ZMountBracket.stl BearingScrew.stl ArmPsiA.stl ArmPsiB.stl ArmThetaA.stl ArmThetaB.stl ShaftCoupling.stl Arm1.stl Arm2.stl ElbowNutSpacer.stl
+FILES3D=driveWheelRod.stl driveWheelTube.stl motorMountShort.stl motorMountLong.stl limitSwitchMountL.stl limitSwitchMountP.stl pipeSupportLong.stl pipeSupportShort.stl BearingAdaptor.stl ZMountBottom.stl ZMountTop.stl BedArm.stl ZMountBracket.stl BearingScrew.stl ArmPsiA.stl ArmPsiB.stl ArmThetaA.stl ArmThetaB.stl ShaftCoupling.stl Arm1.stl Arm2.stl ElbowNutSpacer.stl
 
-PARTS=$(join $(addsuffix $(TARGET)/, $(dir $(FILES))), $(notdir $(FILES))) 
+FILES2D=HeatbedMount.dxf
+
+STLPARTS=$(join $(addsuffix $(TARGET)/, $(dir $(FILES3D))), $(notdir $(FILES3D))) 
+DXFPARTS=$(join $(addsuffix $(DXFTARGET)/, $(dir $(FILES2D))), $(notdir $(FILES2D))) 
 
 
-TARGETS=$(PARTS)
+TARGETS=$(STLPARTS) $(DXFPARTS)
 
 parts : $(TARGET) $(TARGETS)
 
@@ -80,6 +84,9 @@ $(TARGET)/Arm2.stl: Arms.scad $(EXTRAS)
 $(TARGET)/ElbowNutSpacer.stl: Arms.scad $(EXTRAS)
 	$(OPENSCAD) -o $@ -D'$(OPENSCAD_SETTINGS);ElbowNutSpacer();' $<
 
+$(DXFTARGET)/HeatbedMount.dxf: BedMount.scad $(EXTRAS)
+	$(OPENSCAD) -o $@ -D'$(OPENSCAD_SETTINGS);HeatbedMount();' $<
+
 
 #assembly: $(TARGET) $(TARGET)/assembly.stl
 
@@ -87,6 +94,9 @@ all: parts assembly
 
 
 $(TARGET) :
+	mkdir -p $(TARGET)
+
+$(DXFTARGET) :
 	mkdir -p $(TARGET)
 
 #$(TARGET)/%.stl : %.scad $(EXTRAS)
