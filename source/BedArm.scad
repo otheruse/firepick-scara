@@ -17,8 +17,8 @@ module BedArmNoMount(mount_space = 21){
 				rotate([0,90,0])
 					cylinder(r=12,h=18,$fn=50);
         // Bed mount
-            translate([-11,60-8,0])roundedBox([22, 16, 4], radius = 5);
-            translate([-11,170-8,0])roundedBox([22, 16, 4], radius = 5);
+            translate([-11,60-8,0])roundedBox([22, 16, 6], radius = 5);
+            translate([-11,170-8,0])roundedBox([22, 16, 6], radius = 5);
 		}
 
 		cylinder(d=mount_space,h=100);
@@ -37,10 +37,13 @@ module BedArmNoMount(mount_space = 21){
 				rotate([0,90,0])
 					cylinder(d=15.5, h=20);
 		
-        // Bed mount holes 
         for (i=[-1,1]) {
-            translate([i*6, 60,-1])cylinder(d=m3_dia, h=6);
-            translate([i*6, 170,-1])cylinder(d=m3_dia, h=6);
+            // Bed mount holes 
+            translate([i*6, 60,-1])cylinder(d=m3_dia, h=8);
+            translate([i*6, 170,-1])cylinder(d=m3_dia, h=8);
+            // nuts
+            translate([i*6, 60,4])rotate([0,0,30])cylinder(d=m3_nut_dia, h=8, $fn=6);
+            translate([i*6, 170,4])rotate([0,0,30])cylinder(d=m3_nut_dia, h=8, $fn=6);
         }
 	}
 	
