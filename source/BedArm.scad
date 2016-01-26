@@ -66,10 +66,10 @@ module BedArmNoMount(mount_space = 21){
 
 module BedArm(bearing_diameter = 15, bearing_length = 24) {
     rotate([0,0,-90])BearingMount(bearing_od = bearing_diameter, bearing_h = bearing_length);
-    BedArmNoMount(20);
+    BedArmNoMount(mount_space = 20);
 }
 
-
+//
 //$fs=0.5;
 //$fa=3;
 //BedArm(bearing_diameter = 15, bearing_length = 24);

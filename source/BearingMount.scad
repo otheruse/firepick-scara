@@ -2,7 +2,7 @@ include <configuration.scad>
 include <shapes.scad>
 
 
-module screwMount(thickness = 5, hex=true) {
+module screwMount(thickness = 7, hex=true) {
     difference() {
             hull() {
             translate([-thickness,-(m3_nut_dia)/2-1.5,0])rotate([0,90,0])cylinder(d=m3_nut_dia+3, h=thickness);
@@ -11,11 +11,13 @@ module screwMount(thickness = 5, hex=true) {
         // screw
         translate([-thickness,-(m3_nut_dia)/2-1.5,0])rotate([0,90,0])cylinder(d=m3_dia, h=thickness);
         //nut
-        if (hex) {
-            translate([-thickness,-(m3_nut_dia)/2-1.5,0])rotate([0,90,0])cylinder(d=m3_nut_dia, h=2, $fn=6);
-        }
-        else {
-            translate([-thickness,-(m3_nut_dia)/2-1.5,0])rotate([0,90,0])cylinder(d=m3_nut_dia, h=2);
+        translate([-thickness-1,-(m3_nut_dia)/2-1.5,0])rotate([0,90,0]) {
+            if (hex) {
+                cylinder(d=m3_nut_dia, h=3, $fn=6);
+            }
+            else {
+                cylinder(d=m3_nut_dia, h=3, $fn=6);
+            }
         }
     }
 }

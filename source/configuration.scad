@@ -16,6 +16,7 @@ platform_height = 420;
 PVC_pipe_OD = 32;		// Default 32mm
 PVC_pipe_ID = 26;	// measure pipe ID to adjust
 Drive_pipe_OD = 22.5;	// Drive pipe outter diameter: 22mm default
+baseplate_thickness = 18.5; // thickness of the base plate
 
 function nutDia(nominalDiameter) = nominalDiameter*1.8 + 1;
 function boltDia(nominalDiameter) = nominalDiameter + 0.2;

@@ -128,15 +128,15 @@ module countersunkBolt(depth, nominalDia) {
     
 }
 
-module E3DMountBase() {
+module E3DMountBase(height = 37) {
 	difference() {
 		union(){ 
-			cylinder(d=30, h=23);
-            translate([0,0,26])rotate_extrude()translate([12,0])circle(d=3);
-			translate([0,0,23])cylinder(d2=27, d1=30, h=3);
-            cylinder(d=25, h=37);
+			cylinder(d=30, h=height-14);
+            translate([0,0,height-11])rotate_extrude()translate([12,0])circle(d=3);
+			translate([0,0,height-14])cylinder(d2=27, d1=30, h=3);
+            cylinder(d=25, h=height);
         }
-        E3DSlot(39);
+        E3DSlot(height = height+2);
     }
     // Print support
     color([1,0,0,1])translate([0,0,9.9-print_layer_height])cylinder(d=30, h=print_layer_height);
@@ -167,16 +167,16 @@ module E3DMountClamp() {
     }
 }
 
-module E3DMount() {
-	translate([0,0,37])rotate([180,0,0])difference(){
-        E3DMountBase();
+module E3DMount(height=70) {
+	translate([0,0,height])rotate([180,0,0])difference(){
+        E3DMountBase(height);
         // Screw holes
-        translate([0,-7,15])rotate([0,90,0])cylinder(d=m3_dia, h=40);
-        translate([10.5,-7,15])rotate([0,-90,0])countersunkBolt(depth = 11, nominalDia = 3);
-        translate([0,7,15])rotate([0,90,0])cylinder(d=m3_dia, h=40);
-        translate([10.5,7,15])rotate([0,-90,0])countersunkBolt(depth = 11, nominalDia = 3);
+        translate([0,-7,height-22])rotate([0,90,0])cylinder(d=m3_dia, h=40);
+        translate([10.5,-7,height-22])rotate([0,-90,0])countersunkBolt(depth = 11, nominalDia = 3);
+        translate([0,7,height-22])rotate([0,90,0])cylinder(d=m3_dia, h=40);
+        translate([10.5,7,height-22])rotate([0,-90,0])countersunkBolt(depth = 11, nominalDia = 3);
         // Slice half off
-        translate([-30,-30,0])cube([30,60,22]);
+        translate([-30,-30,0])cube([30,60,height-15]);
         // screw holes
         translate([-1,11,7])rotate([0,90,0])cylinder(d=m3_dia, h=20);
         translate([-1,-11,7])rotate([0,90,0])cylinder(d=m3_dia, h=20);
@@ -200,7 +200,7 @@ $fa = 2;
 //translate([0,0,37])rotate([180,0,0])E3DMount();
 //rotate([0,0,180])E3DMountClamp();
 
-//E3DMount();
+E3DMount();
 //translate([0,40,0])E3DMountClamp();
 //translate([0,70,0])difference() {
 //    cylinder(d=13, h=50);
