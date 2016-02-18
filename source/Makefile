@@ -6,7 +6,7 @@ OPENSCAD_SETTINGS=$$fa=2;$$fs=0.3;
 
 EXTRAS=configuration.scad shapes.scad
 
-FILES3D=driveWheelRod.stl driveWheelTube.stl motorMountShort.stl motorMountLong.stl limitSwitchMountL.stl limitSwitchMountP.stl pipeSupportLong.stl pipeSupportShort.stl BearingAdaptor.stl ZMountBottom.stl ZMountTop.stl BedArm.stl ZMountBracket.stl BearingScrew.stl ArmPsiA.stl ArmPsiB.stl ArmThetaA.stl ArmThetaB.stl ShaftCoupling.stl Arm1.stl Arm2.stl ElbowNutSpacer.stl BowdenAdapter.stl ExtruderMount.stl
+FILES3D=PulleyRodMount.stl PulleyTubeMount.stl motorMountShort.stl motorMountLong.stl limitSwitchMountL.stl limitSwitchMountP.stl pipeSupportLong.stl pipeSupportShort.stl BearingAdaptor.stl ZMountBottom.stl ZMountTop.stl BedArm.stl ZMountBracket.stl BearingScrew.stl ArmPsiA.stl ArmPsiB.stl ArmThetaA.stl ArmThetaB.stl ShaftCoupling.stl Arm1.stl Arm2.stl ElbowNutSpacer.stl BowdenAdapter.stl ExtruderMount.stl
 
 FILES2D=HeatbedMount.dxf
 
@@ -18,11 +18,11 @@ TARGETS=$(STLPARTS) $(DXFPARTS)
 
 parts : $(TARGET) $(TARGETS)
 
-$(TARGET)/driveWheelRod.stl: driveWheel.scad $(EXTRAS)
-	$(OPENSCAD) -o $@ -D'$(OPENSCAD_SETTINGS);beltWheelRod(wheel_radius = 75);' $<
+$(TARGET)/PulleyRodMount.stl: DrivePulley.scad $(EXTRAS)
+	$(OPENSCAD) -o $@ -D'$(OPENSCAD_SETTINGS);PulleyRodMount(teeth = 160);' $<
 
-$(TARGET)/driveWheelTube.stl: driveWheel.scad $(EXTRAS)
-	$(OPENSCAD) -o $@ -D'$(OPENSCAD_SETTINGS);beltWheelTube(wheel_radius = 75);' $<
+$(TARGET)/PulleyTubeMount.stl: DrivePulley.scad $(EXTRAS)
+	$(OPENSCAD) -o $@ -D'$(OPENSCAD_SETTINGS);PulleyTubeMount(wheel_radius = 75);' $<
 
 $(TARGET)/motorMountShort.stl: motorMount.scad $(EXTRAS)
 	$(OPENSCAD) -o $@ -D'$(OPENSCAD_SETTINGS);MotorMount(Height=50);' $<
