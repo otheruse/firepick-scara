@@ -25,8 +25,8 @@ module beltSlot(height) {
 
     for (i=[-5:10:5]) {
         translate([0, i, 0]) {
-            translate([0, 0, height-m3_nut_height]) cylinder(d=m3_nut_dia, h=m3_nut_height);
-            cylinder(d=m3_nut_dia, h=m3_nut_height, $fn=6);
+            translate([0, 0, height-m3_nut_height]) cylinder(d=m3_nut_dia, h=m3_nut_height+1);
+            translate([0,0,-1])cylinder(d=m3_nut_dia, h=m3_nut_height+1, $fn=6);
             cylinder(d=5.5, h=height);
             translate([4,0,2.5])thingy(width=2.5, height=height, length=8, r=8);
         }
@@ -162,9 +162,9 @@ module PulleyArmMount(teeth) {
                 linear_extrude(drive_wheel_height+8)rotate(30)arc(r=wheel_radius-10+.5, w=1, angle=95, $fa=1);
 //            }
         }
-       rotate([0,0,30])translate([0,0,2.5])linear_extrude(7)arc(w=3, r=wheel_radius, angle=25);
+       rotate([0,0,30])translate([0,0,2.5])linear_extrude(7)arc(w=3, r=wheel_radius, angle=40);
         cylinder(d=m8_dia, h=26);
-        #translate([0,0,26-m8_nut_height])cylinder(d=m8_nut_dia_tight, h=m8_nut_height, $fn=6);
+        translate([0,0,26-m8_nut_height])cylinder(d=m8_nut_dia_tight, h=m8_nut_height, $fn=6);
 //       cylinder(d=Drive_pipe_OD, h=40);
 //        for(a=[00:120:359]) {
 //            // m3 hole
