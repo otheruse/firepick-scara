@@ -22,7 +22,10 @@ $(TARGET)/PulleyRodMount.stl: DrivePulley.scad $(EXTRAS)
 	$(OPENSCAD) -o $@ -D'$(OPENSCAD_SETTINGS);PulleyRodMount(teeth = 160);' $<
 
 $(TARGET)/PulleyTubeMount.stl: DrivePulley.scad $(EXTRAS)
-	$(OPENSCAD) -o $@ -D'$(OPENSCAD_SETTINGS);PulleyTubeMount(wheel_radius = 75);' $<
+	$(OPENSCAD) -o $@ -D'$(OPENSCAD_SETTINGS);PulleyTubeMount(teeth = 240);' $<
+
+$(TARGET)/PulleyArmMount.stl: DrivePulley.scad $(EXTRAS)
+	$(OPENSCAD) -o $@ -D'$(OPENSCAD_SETTINGS);PulleyArmMount(teeth = 160);' $<
 
 $(TARGET)/motorMountShort.stl: motorMount.scad $(EXTRAS)
 	$(OPENSCAD) -o $@ -D'$(OPENSCAD_SETTINGS);MotorMount(Height=50);' $<

@@ -7,9 +7,10 @@ drive_wheel_mount_radius = 19;
 
 //$fs=0.3;
 //$fa=2;
-//PulleyTubeMount(75);
-////
-//translate([0,160,0])
+//PulleyArmMount(teeth=160);
+//PulleyTubeMount(teeth=240);
+//////
+////translate([0,160,0])
 //PulleyRodMount(teeth = 160);
 
 
@@ -127,17 +128,19 @@ module pulleyTeeth(teeth, upSideDown = false, addBeltSlot = true) {
     }
 }
 
-module PulleyTubeMount(wheel_radius) {
+module PulleyTubeMount(teeth) {
+    wheel_radius = pulley_dia(12, teeth)/2;
     difference() {
         union() {
-            beltWheel(wheel_radius);
+            pulleyTeeth(teeth, upSideDown = false, addBeltSlot = true);
             wheelMount(radius=19, height=40, support_length=11);
             // limit switch interruptors
             for (i=[-30,30,90]) {
                 linear_extrude(drive_wheel_height+8)rotate(i)arc(r=wheel_radius-16+.5, w=1, angle=5, $fa=1);
             }
         }
-        cylinder(d=Drive_pipe_OD, h=40);
+       rotate([0,0,30])translate([0,0,2.5])linear_extrude(7)arc(w=3, r=wheel_radius, angle=25);
+       cylinder(d=Drive_pipe_OD, h=40);
         for(a=[00:120:359]) {
             // m3 hole
             translate([0,0,25])rotate([0,90,a])cylinder(d=m4_dia, h=drive_wheel_mount_radius);
@@ -147,6 +150,32 @@ module PulleyTubeMount(wheel_radius) {
             
     }
 }
+
+module PulleyArmMount(teeth) {
+    wheel_radius = pulley_dia(12, teeth)/2;
+    difference() {
+        union() {
+            pulleyTeeth(teeth, upSideDown = true, addBeltSlot = true);
+            wheelMount(radius=19, height=25, support_length=11);
+            // limit switch interruptors
+//            for (i=[-30,30,90]) {
+                linear_extrude(drive_wheel_height+8)rotate(30)arc(r=wheel_radius-10+.5, w=1, angle=95, $fa=1);
+//            }
+        }
+       rotate([0,0,30])translate([0,0,2.5])linear_extrude(7)arc(w=3, r=wheel_radius, angle=25);
+        cylinder(d=m8_dia, h=26);
+        #translate([0,0,26-m8_nut_height])cylinder(d=m8_nut_dia_tight, h=m8_nut_height, $fn=6);
+//       cylinder(d=Drive_pipe_OD, h=40);
+//        for(a=[00:120:359]) {
+//            // m3 hole
+//            translate([0,0,25])rotate([0,90,a])cylinder(d=m4_dia, h=drive_wheel_mount_radius);
+//            // m3 nut hole
+//            translate([0,0,25])rotate([0,90,a])cylinder(d=m4_nut_dia, h=Drive_pipe_OD/2+m4_nut_height, $fn=6);
+//        }
+            
+    }
+}
+
 
 module PulleyRodMount(teeth) {
     wheel_radius = pulley_dia(12, teeth)/2;

@@ -36,6 +36,7 @@ m4_nut_height = nutHeight(4);
 
 m8_dia = boltDia(8);
 m8_nut_dia = nutDia(8);
+m8_nut_dia_tight = nutDia(8)-0.6;
 m8_nut_height = nutHeight(8);
 
 print_layer_height = 0.25;
