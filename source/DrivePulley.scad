@@ -135,9 +135,10 @@ module PulleyTubeMount(teeth) {
             pulleyTeeth(teeth, upSideDown = false, addBeltSlot = true);
             wheelMount(radius=19, height=40, support_length=11);
             // limit switch interruptors
-            for (i=[-30,30,90]) {
-                linear_extrude(drive_wheel_height+8)rotate(i)arc(r=wheel_radius-16+.5, w=1, angle=5, $fa=1);
-            }
+            linear_extrude(drive_wheel_height+8)rotate(30)arc(r=wheel_radius-16+.5, w=1, angle=25, $fa=1);
+//            for (i=[-30,30,90]) {
+//                linear_extrude(drive_wheel_height+8)rotate(i)arc(r=wheel_radius-16+.5, w=1, angle=5, $fa=1);
+//            }
         }
        rotate([0,0,30])translate([0,0,2.5])linear_extrude(7)arc(w=3, r=wheel_radius, angle=25);
        cylinder(d=Drive_pipe_OD, h=40);
