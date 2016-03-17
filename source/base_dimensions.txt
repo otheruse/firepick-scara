@@ -33,7 +33,5 @@ motor gat 40mm van centrum (y) 0mm (x)
 
 22mm diameter motor gat 
 
-Pipes:
-Long: 458.476 - 20 = 438.476
-Short: 451.442 - 20 = 431.442
+
 

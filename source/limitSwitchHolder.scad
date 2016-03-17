@@ -46,24 +46,27 @@ module limitSwitchBase() {
         translate([-5+1.5,7,height-1])roundedCube([7,13,height]);   
         // screw holes
         hull() {
-            translate([0,3,0])cylinder(d=m3_dia, h=height);
-            translate([0,4.5,0])cylinder(d=m3_dia, h=height);
+            translate([0,1.5,0])cylinder(d=m3_dia, h=height);
+            translate([0,5.5,0])cylinder(d=m3_dia, h=height);
         }
         hull() {
-            translate([0,22,0])cylinder(d=m3_dia, h=height);
-            translate([0,23.5,0])cylinder(d=m3_dia, h=height);
+            translate([0,21.5,0])cylinder(d=m3_dia, h=height);
+            translate([0,24.5,0])cylinder(d=m3_dia, h=height);
         }
         // nuts
         hull() {
-            translate([0,3,0])rotate([0,0,30])cylinder(d=m3_nut_dia, h=m3_nut_height, $fn=6);
-            translate([0,23.5,0])rotate([0,0,30])cylinder(d=m3_nut_dia, h=m3_nut_height, $fn=6);
+            translate([0,0,0])rotate([0,0,30])cylinder(d=m3_nut_dia, h=m3_nut_height, $fn=6);
+            translate([0,26,0])rotate([0,0,30])cylinder(d=m3_nut_dia, h=m3_nut_height, $fn=6);
         }
 
     }
     // print support
-    color([1,0,0,1]) {
-        translate([0,4,m3_nut_height])cylinder(d=m3_nut_dia, h=print_layer_height);
+    color([1,0,0,1]) 
+    {
+        hull() {
+            translate([0,3,m3_nut_height])cylinder(d=m3_nut_dia, h=print_layer_height);
         translate([0,23,m3_nut_height])cylinder(d=m3_nut_dia, h=print_layer_height);
+        }
     }
 }
 
@@ -88,7 +91,8 @@ module limitSwitchHolderL(rod_dia = 8) {
     rotate([0,0,180])rodClamp(rod_dia = rod_dia);
     translate([-5,9,0])difference() {
         roundedCube(size=[10, 7, 8]);
-        translate([5,9,0])rotate([0,0,30])cylinder(r=m3_dia,h=m3_nut_height,$fn=6);
+        translate([5,7,0])rotate([0,0,30])cylinder(d=m3_nut_dia,h=m3_nut_height,$fn=6);
+        translate([5,7,0])rotate([0,0,30])cylinder(d=m3_dia,h=10);
     }
     translate([0,15,0])limitSwitchBase();
     %rotate([0,0,90])translate([15,-5,8])limitSwitch();
@@ -108,9 +112,10 @@ module limitSwitchHolderP(rod_dia = 8) {
 }
 
 
-//$fs=0.3;
-//$fa=3;
+$fs=0.3;
+$fa=3;
 //limitSwitchBase();
 //translate([0,20,0])rodClamp(rod_dia = 8);
 //limitSwitchHolderP();
 //limitSwitch();
+limitSwitchHolderL();

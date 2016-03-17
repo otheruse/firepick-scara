@@ -9,6 +9,12 @@ module ElbowJoint(height = 45, bearing_od = 22, bearing_id = 8, bearing_h = 7) {
         // bearing hole
         cylinder(d=bearing_od + 0.3, h = bearing_h);
         translate([0,0,height - bearing_h])cylinder(d=bearing_od + 0.3, h = bearing_h);
+        
+                // grooves for alignment
+        translate([0,18,height])rotate([0,0,45])cube(size=[3,3,10], center=true);
+        translate([0,-18,height])rotate([0,0,45])cube(size=[3,3,10], center=true);
+        translate([0,0,height+1])rotate([0,45,0])cube(size=[3,34 + 2,3], center=true);
+        
     }
     // print support
     color([1,0,0,1])translate([0,0,bearing_h])cylinder(d=bearing_od + 0.3, h = print_layer_height);
@@ -70,11 +76,7 @@ module Arm1(arm_length = 150, connector_length = 60, connector_dia = Drive_pipe_
                 }
             }
         }
-        // grooves for alignment
-        translate([0,18,connector_length/2])rotate([0,0,45])cube(size=[2,2,connector_length+2], center=true);
-        translate([0,-18,connector_length/2])rotate([0,0,45])cube(size=[2,2,connector_length+2], center=true);
-        translate([0,0,-1])rotate([0,45,0])cube(size=[2,connector_dia + 2,2], center=true);
-        
+
         // pipeconnector inside
         translate([0,0,shoulder_bearing_h])cylinder(d = Drive_pipe_OD, h = connector_length);
         // bearing inside
@@ -120,11 +122,11 @@ module Arm2(arm_length = 150) {
         // Nut slots
         translate([arm_length - 22, 0, 0]) {
             hull() {
-                translate([0,8,13])rotate([0,90,0])rotate([0,0,30])cylinder(d=nutDia(3), h = nutHeight(3), $fn=6);
+                translate([0,6,13])rotate([0,90,0])rotate([0,0,30])cylinder(d=nutDia(3), h = nutHeight(3), $fn=6);
                 translate([0,15,13])rotate([0,90,0])cylinder(d=nutDia(3), h = nutHeight(3), $fn=6);
             }
             mirror([0,1,0])hull() {
-                translate([0,8,13])rotate([0,90,0])rotate([0,0,30])cylinder(d=nutDia(3), h = nutHeight(3), $fn=6);
+                translate([0,6,13])rotate([0,90,0])rotate([0,0,30])cylinder(d=nutDia(3), h = nutHeight(3), $fn=6);
                 translate([0,15,13])rotate([0,90,0])cylinder(d=nutDia(3), h = nutHeight(3), $fn=6);
             }
         }
@@ -159,11 +161,11 @@ module ElbowNutSpacer() {
     }
 }
 
-//$fs = 0.2;
-//$fa = 2;
-//
+$fs = 0.2;
+$fa = 2;
+
 //translate([0,50,0])
-//Arm1();
+Arm1();
 //
 //Arm2();
 

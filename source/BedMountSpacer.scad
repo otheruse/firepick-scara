@@ -17,4 +17,4 @@ module bedMountSpacer(height = 5) {
 
 $fs=0.3;
 $fa=3;
-bedMountSpacer(height = 5);
+bedMountSpacer(height = 11);
