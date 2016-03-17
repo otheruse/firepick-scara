@@ -161,11 +161,11 @@ module ElbowNutSpacer() {
     }
 }
 
-$fs = 0.2;
-$fa = 2;
+//$fs = 0.2;
+//$fa = 2;
 
 //translate([0,50,0])
-Arm1();
+//Arm1();
 //
 //Arm2();
 

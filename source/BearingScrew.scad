@@ -122,8 +122,8 @@ module BearingScrewAssembly() {
 
 //BearingScrewMount();
 //BearingScrewMount(axis_dia = 12, bearing_od=22, thickness = 5, base_width = 40);
-$fs=0.3;
-$fa=3;
+//$fs=0.3;
+//$fa=3;
 //
 //BearingScrewAssembly();
 //%color([0,1,1,0.5])cylinder(d=8, h=40);

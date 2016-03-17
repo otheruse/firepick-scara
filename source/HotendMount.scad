@@ -192,15 +192,15 @@ module E3DMount(height=70) {
     }
 }
 
-$fs = 0.2;
-$fa = 2;
+//$fs = 0.2;
+//$fa = 2;
 //translate([0,40,0])HotendMount();
 //translate([8,-40,0])rotate([0,-90,0])countersunkBolt(8, 3);
 
 //translate([0,0,37])rotate([180,0,0])E3DMount();
 //rotate([0,0,180])E3DMountClamp();
 
-E3DMount();
+//E3DMount();
 //translate([0,40,0])E3DMountClamp();
 //translate([0,70,0])difference() {
 //    cylinder(d=13, h=50);

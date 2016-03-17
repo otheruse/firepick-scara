@@ -112,10 +112,10 @@ module limitSwitchHolderP(rod_dia = 8) {
 }
 
 
-$fs=0.3;
-$fa=3;
+//$fs=0.3;
+//$fa=3;
 //limitSwitchBase();
 //translate([0,20,0])rodClamp(rod_dia = 8);
 //limitSwitchHolderP();
 //limitSwitch();
-limitSwitchHolderL();
+//limitSwitchHolderL();
